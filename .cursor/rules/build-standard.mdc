@@ -1,0 +1,7 @@
+---
+description: Canonical build, verification, and epistemic integrity standard for p-vs-np-frontier-lab
+alwaysApply: true
+---
+
+Read and follow `AGENTS.md` in the repository root before modifying any code, Lean proof, experiment, or manuscript.
+Never fabricate claims, citations, or test outputs. Classify every finding using the six-class taxonomy: bug, error, issue, problem, dilemma, conflict.

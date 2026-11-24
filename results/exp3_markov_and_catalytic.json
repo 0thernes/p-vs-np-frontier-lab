@@ -1,0 +1,119 @@
+{
+  "experiment": "exp3_markov_bounded_negation_and_catalytic_algebra",
+  "arithmetic": "exact_integer_boolean",
+  "markov_inverter": [
+    {
+      "k_not_gates": 1,
+      "n_variables_inverted": 1,
+      "inputs_exhaustively_checked": 2,
+      "failures": 0,
+      "theoretical_min_not_gates": 1,
+      "is_optimal": true
+    },
+    {
+      "k_not_gates": 2,
+      "n_variables_inverted": 3,
+      "inputs_exhaustively_checked": 8,
+      "failures": 0,
+      "theoretical_min_not_gates": 2,
+      "is_optimal": true
+    },
+    {
+      "k_not_gates": 3,
+      "n_variables_inverted": 7,
+      "inputs_exhaustively_checked": 128,
+      "failures": 0,
+      "theoretical_min_not_gates": 3,
+      "is_optimal": true
+    },
+    {
+      "k_not_gates": 4,
+      "n_variables_inverted": 15,
+      "inputs_exhaustively_checked": 32768,
+      "failures": 0,
+      "theoretical_min_not_gates": 4,
+      "is_optimal": true
+    }
+  ],
+  "berkowitz_slice_check": {
+    "n": 6,
+    "function": "PARITY_6",
+    "cross_slice_monotonicity_violations": 182,
+    "same_slice_comparable_pairs": 0,
+    "every_function_monotone_on_fixed_slice": true
+  },
+  "catalytic_multilinear_scaling": [
+    {
+      "degree_d": 1,
+      "catalyst_registers_used": 1,
+      "clean_workspace_registers": 0,
+      "primitive_ops": 1,
+      "exact_formula_4_rec": 1,
+      "trials_verified_bit_for_bit": 100,
+      "catalyst_corruptions": 0
+    },
+    {
+      "degree_d": 2,
+      "catalyst_registers_used": 2,
+      "clean_workspace_registers": 0,
+      "primitive_ops": 10,
+      "exact_formula_4_rec": 10,
+      "trials_verified_bit_for_bit": 100,
+      "catalyst_corruptions": 0
+    },
+    {
+      "degree_d": 3,
+      "catalyst_registers_used": 3,
+      "clean_workspace_registers": 0,
+      "primitive_ops": 46,
+      "exact_formula_4_rec": 46,
+      "trials_verified_bit_for_bit": 100,
+      "catalyst_corruptions": 0
+    },
+    {
+      "degree_d": 4,
+      "catalyst_registers_used": 4,
+      "clean_workspace_registers": 0,
+      "primitive_ops": 190,
+      "exact_formula_4_rec": 190,
+      "trials_verified_bit_for_bit": 100,
+      "catalyst_corruptions": 0
+    },
+    {
+      "degree_d": 5,
+      "catalyst_registers_used": 5,
+      "clean_workspace_registers": 0,
+      "primitive_ops": 766,
+      "exact_formula_4_rec": 766,
+      "trials_verified_bit_for_bit": 100,
+      "catalyst_corruptions": 0
+    },
+    {
+      "degree_d": 6,
+      "catalyst_registers_used": 6,
+      "clean_workspace_registers": 0,
+      "primitive_ops": 3070,
+      "exact_formula_4_rec": 3070,
+      "trials_verified_bit_for_bit": 100,
+      "catalyst_corruptions": 0
+    },
+    {
+      "degree_d": 7,
+      "catalyst_registers_used": 7,
+      "clean_workspace_registers": 0,
+      "primitive_ops": 12286,
+      "exact_formula_4_rec": 12286,
+      "trials_verified_bit_for_bit": 10,
+      "catalyst_corruptions": 0
+    },
+    {
+      "degree_d": 8,
+      "catalyst_registers_used": 8,
+      "clean_workspace_registers": 0,
+      "primitive_ops": 49150,
+      "exact_formula_4_rec": 49150,
+      "trials_verified_bit_for_bit": 10,
+      "catalyst_corruptions": 0
+    }
+  ]
+}

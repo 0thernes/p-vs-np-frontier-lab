@@ -1,0 +1,26 @@
+# p-vs-np-frontier-lab — Full AI Context Index (`llms-full.txt`)
+
+## Identity, License & Epistemic Boundary
+- Repository: `p-vs-np-frontier-lab` (`v1.0.0`)
+- Author: Alexander S. Donahue (Independent Researcher, Spokane, WA, USA; ORCID `0009-0006-8168-9648`; `0_0@0thernes.art`)
+- Dual License: `Apache-2.0` (code, Lean proofs, scripts) + `CC-BY-4.0` (white paper, docs, figures)
+- **Epistemic Boundary:** P vs. NP remains **COMPLETELY OPEN**. No file or theorem in this repository claims P = NP or P != NP.
+
+## Tier-1 Lean 4.35.0 Formalization (Zero Mathlib, 13 `module` files, 8,078 lines)
+All 15 exported theorems in `lean/Solution.lean` depend strictly on axioms within `[propext, Classical.choice, Quot.sound]` (`results/lean_axioms.txt`) and pass 6 independent kernel checks (`lean`, `leanchecker`, `leanchecker-paranoid`, `con-leche --verified`, `con-ron --verified`, `nanoda_bin` with `unpermitted_axiom_hard_error=true`):
+- `C1` (`PVsNP.OTM`): `PSubsetNPStmt` — `InP O L -> InNP O L` for explicit 4-tape Oracle Turing Machines.
+- `C2` (`PVsNP.Relativization`): `BakerGillSolovayStmt` — explicit separation oracle `B` (`RelativizationSep.lean`) and collapse oracle `A` (`RelativizationCol.lean`).
+- `C3`–`C5` (`PVsNP.NaturalProofs`): exact cross-multiplied integer Razborov–Rudich PRF breaker, integer hybrid telescoping triangle inequality, and `nonConstantProp` density >= 1/2 witness.
+- `C6`–`C9` (`PVsNP.SheafPolymorphism`): odd cycles `C_{2k+3}` maximally contextual for all `k`; Mermin–Peres 3x3 magic square maximally contextual; Schaefer tractable polymorphisms (Maltsev XOR, Horn AND, Dual-Horn OR, 2-SAT Majority); **all-arity monotone 3-SAT inclusion-minimal rigidity** of `{R000, R111}` for every `k >= 1`.
+- `C10`–`C13` (`PVsNP.CircuitPhaseTransition`): Markov's tight `k`-NOT inverter threshold `n = 2^k - 1`; Fischer universal dual-rail compiler; multiplicative complexity `deg_F2(f) <= k + 1` and `MC(AND_n) >= n - 1`; characteristic-2 `Perm_n = Det_n (mod 2)` and universal witness `W_n = diag(I_{n-2}, J_2)` separating them over `Z` and `Z/pZ` for all `p >= 3`.
+- `C14` (`PVsNP.CatalyticAlgebra`): Landauer bijective invertibility (`invertProg`) and arbitrary-degree `d`-fold zero-workspace catalytic product restoring all `d` arbitrary catalyst registers bit-for-bit in `T(d) + 2 = 3 * 4^(d-1)` operations.
+
+## Tier-2 & Tier-3 Experiments (`experiments/`, `results/`, `tests/test_all.py`)
+- `exp1_polymorphism_census.py`: Exhaustive arity 1–3 polymorphism census of all 15 3-SAT subsets + 3-regular Tseitin graphs `V=10..46` (maximally contextual; CaDiCaL conflicts `64 -> 23,644` vs `V-1` F2 Gaussian ops `9 -> 45`).
+- `exp2_multiplicative_complexity.py`: Exact CaDiCaL 2.1.2 MC synthesis on 19 functions (`n=3,4,5`) exposing strict `+1` gaps above `deg-1` on `Bent_4`, `E_2^5`, `E_3^5`; `CLIQUE_4_3` bracketed at `MC in {5,6}`; cross-checked against exhaustive brute-force enumeration of all 2,048 1-AND circuits on `n=3` in `tests/test_all.py`.
+- `exp3_markov_and_catalytic.py`: Exhaustive Markov inverter `k=1..4` (up to `2^15 = 32,768` inputs, 0 failures); Berkowitz slice check on `PARITY_6`; catalytic product `d=1..8` (0 clean regs, 0 corruptions, exact `3*4^(d-1)-2` up to `49,150` ops).
+- `exp4_wild_p_eq_np_falsifiers.py`: Attack A CTDS RK45 (`numerical_approximation`, planted SAT 20/20 solved vs exact UNSAT 0/15 solved with `max ln a_m ~ 10.68`); Attack B exact `Fraction` LP gaps = 1 on UNSAT formulas; Attack C exact 3-adic Hensel root `[42,0,0,0] mod 81 -> (3/2,0,0,0)` on 10-clause UNSAT 3-SAT; Attack D rigid asymmetric 15-clause UNSAT 3-SAT (`|Aut| = 1` over all 3,840 signed perms).
+- `exp5_char2_permanent_determinant.py`: Exact char-2 collapse (`n=2..5`), `W_n` mod 3, and exact rational Mignon–Ressayre Hessian ranks `n^2 in {4, 9, 16, 25}` (`dc(Perm_n) >= ceil(n^2/2) in {2, 5, 8, 13}`).
+
+## Surviving Open Frontiers (Tier-4)
+Out of 12 divergent pathways audited against the 5-barrier gauntlet, only Pathways 9 (Characteristic-2 / GCT), 10 (Catalytic Space–Time / Williams 2025), and 11 (Bounded Arithmetic / Hardness Magnification) remain open research targets.

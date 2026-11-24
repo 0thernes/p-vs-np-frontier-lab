@@ -1,0 +1,31 @@
+# Python / venv
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# Lean 4 / Lake build cache
+lean/.lake/
+*.ndjson
+results/nanoda_config.json
+lean/*.olean
+lean/*.ilean
+lean/*.c
+lean/*.o
+
+# LaTeX build artifacts
+paper/build/
+*.aux
+*.log
+*.out
+*.toc
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+*.swp
+.env

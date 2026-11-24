@@ -1,0 +1,49 @@
+# Build Standard v1.1.0 Machine-Readable Repository Card
+schema_version: "1.1.0"
+name: p-vs-np-frontier-lab
+version: "1.0.0"
+status: active
+epistemic_scope:
+  target_open_problem: "P vs NP (Millennium Prize Problem)"
+  resolution_claimed: false
+  verified_lean_theorems: 14
+  lean_kernels_passed: 6
+  lean_independent_codebases: 5
+author:
+  name: "Alexander S. Donahue"
+  role: "Independent Researcher"
+  location: "Spokane, WA, USA"
+  orcid: "0009-0006-8168-9648"
+  email: "0_0@0thernes.art"
+licenses:
+  code: "Apache-2.0"
+  prose_and_figures: "CC-BY-4.0"
+toolchains:
+  lean: "leanprover/lean4:v4.35.0"
+  python: "3.13.12"
+  sat_solver: "CaDiCaL 2.1.2"
+  latex: "Tectonic (amsart)"
+entrypoints:
+  orchestrator: "scripts/run_all.ps1"
+  lean_challenge: "lean/Challenge.lean"
+  lean_solution: "lean/Solution.lean"
+  lean_axiom_audit: "lean/VerifyAxioms.lean"
+  formalization_ledger: "lean/formalization.yaml"
+  test_suite: "tests/test_all.py"
+  figure_generator: "scripts/make_figures.py"
+  paper_source: "paper/main.tex"
+  frozen_pdf: "dist/Donahue_2026_p_vs_np_barrier_anatomy.pdf"
+  arxiv_tarball: "dist/arxiv_submission.tar.gz"
+  checksum_manifest: "MANIFEST.sha256"
+ci:
+  workflow: ".github/workflows/ci.yml"
+  policy: "informational-only (no branch protection, no PR gate, no Dependabot/Copilot files)"
+governance:
+  claims: "CLAIMS.md"
+  limitations: "LIMITATIONS.md"
+  replication: "REPLICATION.md"
+  security: "SECURITY.md"
+  ten_pass_review: "docs/10-pass-review.md"
+  adrs:
+    - "docs/adr/0001-zero-mathlib-six-kernel-lean.md"
+    - "docs/adr/0002-epistemic-scope-and-identity.md"

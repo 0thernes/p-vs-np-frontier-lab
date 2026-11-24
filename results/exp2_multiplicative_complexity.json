@@ -1,0 +1,1418 @@
+{
+  "experiment": "exp2_multiplicative_complexity_exact_sat",
+  "solver": "CaDiCaL 2.1.2",
+  "arithmetic": "exact_integer_f2",
+  "results": [
+    {
+      "name": "AND_3",
+      "n": 3,
+      "deg": 3,
+      "ai": 1,
+      "nonlinearity": 1,
+      "fourier_sparsity": 8,
+      "gowers_u2_4th_moment": 1408,
+      "mc": 2,
+      "status": "EXACT",
+      "gap_above_deg_minus_1": 0,
+      "elapsed_s": 0.0644,
+      "circuit_witness": {
+        "n": 3,
+        "k": 2,
+        "gates": [
+          {
+            "left": [
+              1,
+              1,
+              1
+            ],
+            "right": [
+              0,
+              1,
+              0
+            ]
+          },
+          {
+            "left": [
+              1,
+              0,
+              0,
+              1
+            ],
+            "right": [
+              1,
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        "out_const": 0,
+        "out_coeffs": [
+          1,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "name": "MAJ_3 (TH_2^3)",
+      "n": 3,
+      "deg": 2,
+      "ai": 2,
+      "nonlinearity": 2,
+      "fourier_sparsity": 4,
+      "gowers_u2_4th_moment": 1024,
+      "mc": 1,
+      "status": "EXACT",
+      "gap_above_deg_minus_1": 0,
+      "elapsed_s": 0.04,
+      "circuit_witness": {
+        "n": 3,
+        "k": 1,
+        "gates": [
+          {
+            "left": [
+              1,
+              0,
+              1
+            ],
+            "right": [
+              1,
+              1,
+              0
+            ]
+          }
+        ],
+        "out_const": 0,
+        "out_coeffs": [
+          1,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "name": "E_2^3 (exact weight 2)",
+      "n": 3,
+      "deg": 3,
+      "ai": 1,
+      "nonlinearity": 1,
+      "fourier_sparsity": 8,
+      "gowers_u2_4th_moment": 1408,
+      "mc": 2,
+      "status": "EXACT",
+      "gap_above_deg_minus_1": 0,
+      "elapsed_s": 0.0615,
+      "circuit_witness": {
+        "n": 3,
+        "k": 2,
+        "gates": [
+          {
+            "left": [
+              1,
+              1,
+              0
+            ],
+            "right": [
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "left": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "right": [
+              1,
+              0,
+              0,
+              1
+            ]
+          }
+        ],
+        "out_const": 0,
+        "out_coeffs": [
+          1,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "name": "AND_4",
+      "n": 4,
+      "deg": 4,
+      "ai": 1,
+      "nonlinearity": 1,
+      "fourier_sparsity": 16,
+      "gowers_u2_4th_moment": 38656,
+      "mc": 3,
+      "status": "EXACT",
+      "gap_above_deg_minus_1": 0,
+      "elapsed_s": 0.0816,
+      "circuit_witness": {
+        "n": 4,
+        "k": 3,
+        "gates": [
+          {
+            "left": [
+              1,
+              1,
+              1,
+              0
+            ],
+            "right": [
+              0,
+              1,
+              0,
+              0
+            ]
+          },
+          {
+            "left": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "right": [
+              1,
+              0,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "left": [
+              0,
+              0,
+              0,
+              1,
+              1,
+              1
+            ],
+            "right": [
+              1,
+              0,
+              0,
+              0,
+              0,
+              1
+            ]
+          }
+        ],
+        "out_const": 0,
+        "out_coeffs": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "name": "TH_2^4",
+      "n": 4,
+      "deg": 4,
+      "ai": 2,
+      "nonlinearity": 5,
+      "fourier_sparsity": 16,
+      "gowers_u2_4th_moment": 7936,
+      "mc": 3,
+      "status": "EXACT",
+      "gap_above_deg_minus_1": 0,
+      "elapsed_s": 0.0779,
+      "circuit_witness": {
+        "n": 4,
+        "k": 3,
+        "gates": [
+          {
+            "left": [
+              1,
+              1,
+              0,
+              1
+            ],
+            "right": [
+              1,
+              0,
+              1,
+              0
+            ]
+          },
+          {
+            "left": [
+              1,
+              0,
+              0,
+              1,
+              1
+            ],
+            "right": [
+              0,
+              1,
+              0,
+              1,
+              0
+            ]
+          },
+          {
+            "left": [
+              1,
+              1,
+              0,
+              1,
+              1,
+              0
+            ],
+            "right": [
+              1,
+              0,
+              0,
+              1,
+              0,
+              1
+            ]
+          }
+        ],
+        "out_const": 0,
+        "out_coeffs": [
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "name": "TH_3^4",
+      "n": 4,
+      "deg": 4,
+      "ai": 2,
+      "nonlinearity": 5,
+      "fourier_sparsity": 16,
+      "gowers_u2_4th_moment": 7936,
+      "mc": 3,
+      "status": "EXACT",
+      "gap_above_deg_minus_1": 0,
+      "elapsed_s": 0.068,
+      "circuit_witness": {
+        "n": 4,
+        "k": 3,
+        "gates": [
+          {
+            "left": [
+              0,
+              1,
+              1,
+              1
+            ],
+            "right": [
+              1,
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "left": [
+              0,
+              1,
+              0,
+              1,
+              0
+            ],
+            "right": [
+              1,
+              0,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "left": [
+              1,
+              1,
+              1,
+              0,
+              1,
+              0
+            ],
+            "right": [
+              1,
+              0,
+              0,
+              0,
+              1,
+              1
+            ]
+          }
+        ],
+        "out_const": 0,
+        "out_coeffs": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "name": "E_2^4 (exact weight 2)",
+      "n": 4,
+      "deg": 3,
+      "ai": 1,
+      "nonlinearity": 2,
+      "fourier_sparsity": 8,
+      "gowers_u2_4th_moment": 22528,
+      "mc": 2,
+      "status": "EXACT",
+      "gap_above_deg_minus_1": 0,
+      "elapsed_s": 0.055,
+      "circuit_witness": {
+        "n": 4,
+        "k": 2,
+        "gates": [
+          {
+            "left": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "right": [
+              0,
+              1,
+              0,
+              1
+            ]
+          },
+          {
+            "left": [
+              1,
+              1,
+              0,
+              0,
+              0
+            ],
+            "right": [
+              1,
+              0,
+              1,
+              0,
+              1
+            ]
+          }
+        ],
+        "out_const": 0,
+        "out_coeffs": [
+          1,
+          0,
+          0,
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "name": "E_3^4 (exact weight 3)",
+      "n": 4,
+      "deg": 3,
+      "ai": 1,
+      "nonlinearity": 4,
+      "fourier_sparsity": 10,
+      "gowers_u2_4th_moment": 10240,
+      "mc": 2,
+      "status": "EXACT",
+      "gap_above_deg_minus_1": 0,
+      "elapsed_s": 0.0334,
+      "circuit_witness": {
+        "n": 4,
+        "k": 2,
+        "gates": [
+          {
+            "left": [
+              1,
+              0,
+              0,
+              1
+            ],
+            "right": [
+              1,
+              0,
+              1,
+              0
+            ]
+          },
+          {
+            "left": [
+              0,
+              1,
+              1,
+              1,
+              1
+            ],
+            "right": [
+              1,
+              0,
+              0,
+              0,
+              1
+            ]
+          }
+        ],
+        "out_const": 0,
+        "out_coeffs": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "name": "MOD3_0^4 (w % 3 == 0)",
+      "n": 4,
+      "deg": 4,
+      "ai": 2,
+      "nonlinearity": 5,
+      "fourier_sparsity": 16,
+      "gowers_u2_4th_moment": 7936,
+      "mc": 3,
+      "status": "EXACT",
+      "gap_above_deg_minus_1": 0,
+      "elapsed_s": 0.0706,
+      "circuit_witness": {
+        "n": 4,
+        "k": 3,
+        "gates": [
+          {
+            "left": [
+              1,
+              0,
+              1,
+              1
+            ],
+            "right": [
+              1,
+              1,
+              0,
+              0
+            ]
+          },
+          {
+            "left": [
+              0,
+              1,
+              0,
+              0,
+              1
+            ],
+            "right": [
+              1,
+              1,
+              0,
+              1,
+              0
+            ]
+          },
+          {
+            "left": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0
+            ],
+            "right": [
+              0,
+              0,
+              0,
+              1,
+              0,
+              1
+            ]
+          }
+        ],
+        "out_const": 1,
+        "out_coeffs": [
+          0,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "name": "Bent_4 (x0x1 ^ x2x3)",
+      "n": 4,
+      "deg": 2,
+      "ai": 2,
+      "nonlinearity": 6,
+      "fourier_sparsity": 16,
+      "gowers_u2_4th_moment": 4096,
+      "mc": 2,
+      "status": "EXACT",
+      "gap_above_deg_minus_1": 1,
+      "elapsed_s": 0.0963,
+      "circuit_witness": {
+        "n": 4,
+        "k": 2,
+        "gates": [
+          {
+            "left": [
+              0,
+              0,
+              1,
+              0
+            ],
+            "right": [
+              1,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "left": [
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "right": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        "out_const": 0,
+        "out_coeffs": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "name": "3SAT_clause_3 (x0|x1|x2)",
+      "n": 3,
+      "deg": 3,
+      "ai": 1,
+      "nonlinearity": 1,
+      "fourier_sparsity": 8,
+      "gowers_u2_4th_moment": 1408,
+      "mc": 2,
+      "status": "EXACT",
+      "gap_above_deg_minus_1": 0,
+      "elapsed_s": 0.0574,
+      "circuit_witness": {
+        "n": 3,
+        "k": 2,
+        "gates": [
+          {
+            "left": [
+              0,
+              0,
+              1
+            ],
+            "right": [
+              1,
+              0,
+              1
+            ]
+          },
+          {
+            "left": [
+              1,
+              1,
+              0,
+              1
+            ],
+            "right": [
+              0,
+              1,
+              0,
+              0
+            ]
+          }
+        ],
+        "out_const": 0,
+        "out_coeffs": [
+          1,
+          0,
+          0,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "name": "AND_5",
+      "n": 5,
+      "deg": 5,
+      "ai": 1,
+      "nonlinearity": 1,
+      "fourier_sparsity": 32,
+      "gowers_u2_4th_moment": 810496,
+      "mc": 4,
+      "status": "EXACT",
+      "gap_above_deg_minus_1": 0,
+      "elapsed_s": 0.0767,
+      "circuit_witness": {
+        "n": 5,
+        "k": 4,
+        "gates": [
+          {
+            "left": [
+              1,
+              0,
+              1,
+              0,
+              1
+            ],
+            "right": [
+              1,
+              0,
+              1,
+              0,
+              0
+            ]
+          },
+          {
+            "left": [
+              0,
+              0,
+              0,
+              1,
+              1,
+              1
+            ],
+            "right": [
+              1,
+              0,
+              1,
+              1,
+              0,
+              0
+            ]
+          },
+          {
+            "left": [
+              1,
+              1,
+              1,
+              0,
+              0,
+              1,
+              1
+            ],
+            "right": [
+              0,
+              1,
+              1,
+              0,
+              1,
+              0,
+              0
+            ]
+          },
+          {
+            "left": [
+              1,
+              1,
+              0,
+              1,
+              1,
+              0,
+              1,
+              0
+            ],
+            "right": [
+              1,
+              1,
+              0,
+              1,
+              1,
+              0,
+              1,
+              1
+            ]
+          }
+        ],
+        "out_const": 0,
+        "out_coeffs": [
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "name": "MAJ_5 (TH_3^5)",
+      "n": 5,
+      "deg": 4,
+      "ai": 3,
+      "nonlinearity": 10,
+      "fourier_sparsity": 16,
+      "gowers_u2_4th_moment": 126976,
+      "mc": 3,
+      "status": "EXACT",
+      "gap_above_deg_minus_1": 0,
+      "elapsed_s": 0.0488,
+      "circuit_witness": {
+        "n": 5,
+        "k": 3,
+        "gates": [
+          {
+            "left": [
+              0,
+              0,
+              1,
+              1,
+              0
+            ],
+            "right": [
+              0,
+              1,
+              0,
+              1,
+              0
+            ]
+          },
+          {
+            "left": [
+              0,
+              1,
+              1,
+              0,
+              0,
+              1
+            ],
+            "right": [
+              1,
+              1,
+              0,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "left": [
+              0,
+              1,
+              0,
+              0,
+              1,
+              1,
+              1
+            ],
+            "right": [
+              0,
+              0,
+              0,
+              1,
+              1,
+              1,
+              0
+            ]
+          }
+        ],
+        "out_const": 0,
+        "out_coeffs": [
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "name": "TH_2^5",
+      "n": 5,
+      "deg": 4,
+      "ai": 2,
+      "nonlinearity": 6,
+      "fourier_sparsity": 22,
+      "gowers_u2_4th_moment": 188416,
+      "mc": 3,
+      "status": "EXACT",
+      "gap_above_deg_minus_1": 0,
+      "elapsed_s": 0.3194,
+      "circuit_witness": {
+        "n": 5,
+        "k": 3,
+        "gates": [
+          {
+            "left": [
+              1,
+              1,
+              1,
+              1,
+              0
+            ],
+            "right": [
+              1,
+              1,
+              1,
+              0,
+              1
+            ]
+          },
+          {
+            "left": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1
+            ],
+            "right": [
+              0,
+              1,
+              0,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "left": [
+              0,
+              1,
+              1,
+              0,
+              0,
+              1,
+              1
+            ],
+            "right": [
+              1,
+              1,
+              1,
+              0,
+              0,
+              1,
+              0
+            ]
+          }
+        ],
+        "out_const": 0,
+        "out_coeffs": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "name": "TH_4^5",
+      "n": 5,
+      "deg": 4,
+      "ai": 2,
+      "nonlinearity": 6,
+      "fourier_sparsity": 22,
+      "gowers_u2_4th_moment": 188416,
+      "mc": 3,
+      "status": "EXACT",
+      "gap_above_deg_minus_1": 0,
+      "elapsed_s": 0.163,
+      "circuit_witness": {
+        "n": 5,
+        "k": 3,
+        "gates": [
+          {
+            "left": [
+              0,
+              1,
+              1,
+              1,
+              1
+            ],
+            "right": [
+              1,
+              0,
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "left": [
+              0,
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "right": [
+              0,
+              0,
+              0,
+              1,
+              1,
+              0
+            ]
+          },
+          {
+            "left": [
+              0,
+              0,
+              1,
+              1,
+              0,
+              1,
+              1
+            ],
+            "right": [
+              0,
+              0,
+              1,
+              1,
+              1,
+              1,
+              0
+            ]
+          }
+        ],
+        "out_const": 0,
+        "out_coeffs": [
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "name": "E_2^5 (exact weight 2)",
+      "n": 5,
+      "deg": 3,
+      "ai": 1,
+      "nonlinearity": 6,
+      "fourier_sparsity": 32,
+      "gowers_u2_4th_moment": 188416,
+      "mc": 3,
+      "status": "EXACT",
+      "gap_above_deg_minus_1": 1,
+      "elapsed_s": 0.1622,
+      "circuit_witness": {
+        "n": 5,
+        "k": 3,
+        "gates": [
+          {
+            "left": [
+              1,
+              0,
+              0,
+              1,
+              0
+            ],
+            "right": [
+              1,
+              0,
+              1,
+              0,
+              0
+            ]
+          },
+          {
+            "left": [
+              0,
+              1,
+              0,
+              0,
+              1,
+              0
+            ],
+            "right": [
+              1,
+              0,
+              1,
+              1,
+              1,
+              0
+            ]
+          },
+          {
+            "left": [
+              1,
+              1,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "right": [
+              1,
+              0,
+              0,
+              0,
+              1,
+              1,
+              1
+            ]
+          }
+        ],
+        "out_const": 0,
+        "out_coeffs": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "name": "E_3^5 (exact weight 3)",
+      "n": 5,
+      "deg": 3,
+      "ai": 1,
+      "nonlinearity": 6,
+      "fourier_sparsity": 32,
+      "gowers_u2_4th_moment": 188416,
+      "mc": 3,
+      "status": "EXACT",
+      "gap_above_deg_minus_1": 1,
+      "elapsed_s": 0.2685,
+      "circuit_witness": {
+        "n": 5,
+        "k": 3,
+        "gates": [
+          {
+            "left": [
+              0,
+              0,
+              0,
+              1,
+              0
+            ],
+            "right": [
+              0,
+              0,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "left": [
+              1,
+              0,
+              0,
+              1,
+              1,
+              0
+            ],
+            "right": [
+              0,
+              1,
+              0,
+              1,
+              1,
+              0
+            ]
+          },
+          {
+            "left": [
+              1,
+              1,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "right": [
+              1,
+              1,
+              1,
+              0,
+              0,
+              1,
+              1
+            ]
+          }
+        ],
+        "out_const": 0,
+        "out_coeffs": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "name": "MOD3_0^5 (w % 3 == 0)",
+      "n": 5,
+      "deg": 5,
+      "ai": 2,
+      "nonlinearity": 7,
+      "fourier_sparsity": 32,
+      "gowers_u2_4th_moment": 134656,
+      "mc": 4,
+      "status": "EXACT",
+      "gap_above_deg_minus_1": 0,
+      "elapsed_s": 0.1208,
+      "circuit_witness": {
+        "n": 5,
+        "k": 4,
+        "gates": [
+          {
+            "left": [
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "right": [
+              0,
+              0,
+              1,
+              1,
+              0
+            ]
+          },
+          {
+            "left": [
+              1,
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "right": [
+              1,
+              0,
+              1,
+              1,
+              0,
+              0
+            ]
+          },
+          {
+            "left": [
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1
+            ],
+            "right": [
+              0,
+              0,
+              0,
+              1,
+              0,
+              1,
+              1
+            ]
+          },
+          {
+            "left": [
+              1,
+              0,
+              0,
+              0,
+              1,
+              0,
+              1,
+              0
+            ],
+            "right": [
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0,
+              1
+            ]
+          }
+        ],
+        "out_const": 1,
+        "out_coeffs": [
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "name": "MOD3_1^5 (w % 3 == 1)",
+      "n": 5,
+      "deg": 4,
+      "ai": 2,
+      "nonlinearity": 10,
+      "fourier_sparsity": 16,
+      "gowers_u2_4th_moment": 126976,
+      "mc": 3,
+      "status": "EXACT",
+      "gap_above_deg_minus_1": 0,
+      "elapsed_s": 0.0831,
+      "circuit_witness": {
+        "n": 5,
+        "k": 3,
+        "gates": [
+          {
+            "left": [
+              0,
+              1,
+              1,
+              1,
+              1
+            ],
+            "right": [
+              1,
+              0,
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "left": [
+              0,
+              0,
+              1,
+              1,
+              0,
+              0
+            ],
+            "right": [
+              0,
+              0,
+              0,
+              1,
+              1,
+              0
+            ]
+          },
+          {
+            "left": [
+              1,
+              1,
+              0,
+              0,
+              0,
+              1,
+              0
+            ],
+            "right": [
+              1,
+              0,
+              0,
+              1,
+              0,
+              1,
+              1
+            ]
+          }
+        ],
+        "out_const": 0,
+        "out_coeffs": [
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "name": "CLIQUE_4_3 (triangle in K4, n=6)",
+      "n": 6,
+      "deg": 6,
+      "ai": 2,
+      "nonlinearity": 23,
+      "fourier_sparsity": 64,
+      "gowers_u2_4th_moment": 842752,
+      "mc": null,
+      "lower_bound": 5,
+      "status": "TIMEOUT",
+      "elapsed_s": 20.0779,
+      "circuit_witness": null
+    }
+  ]
+}

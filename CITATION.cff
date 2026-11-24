@@ -1,0 +1,34 @@
+cff-version: 1.2.0
+message: "If you use this formalization, computational falsification bench, or white paper, please cite it as below."
+type: software
+title: "p-vs-np-frontier-lab: Machine-Checked Barrier Anatomy and Twelve Divergent Pathways Toward P vs. NP"
+version: 1.0.0
+date-released: 2026-11-23
+license:
+  - Apache-2.0
+  - CC-BY-4.0
+authors:
+  - family-names: Donahue
+    given-names: Alexander S.
+    orcid: "https://orcid.org/0009-0006-8168-9648"
+    email: "0_0@0thernes.art"
+    city: Spokane
+    region: WA
+    country: US
+keywords:
+  - P vs NP
+  - computational complexity
+  - Lean 4
+  - formal verification
+  - relativization
+  - natural proofs
+  - polymorphism rigidity
+  - sheaf contextuality
+  - multiplicative complexity
+  - catalytic computation
+abstract: >-
+  A zero-Mathlib Lean 4.35.0 formalization (14 unconditional theorems verified across
+  six kernel checks and five independent implementations), exact-arithmetic and
+  SAT-certified falsification bench, and AMS-LaTeX white paper auditing classical
+  complexity barriers and twelve divergent pathways toward P vs. NP. P vs. NP remains
+  open; no proof of P = NP or P != NP is claimed.

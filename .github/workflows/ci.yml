@@ -1,0 +1,63 @@
+# SPDX-License-Identifier: Apache-2.0
+# Informational-only verification workflow (Build Standard v1.1.0:
+# no branch protection, no required PR gates, commits land straight on main).
+name: verify-p-vs-np-frontier-lab
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lean-multi-kernel:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install elan and Lean 4.35.0
+        run: |
+          curl https://elan.lean-lang.org/elan-init.sh -sSf | sh -s -- -y --default-toolchain leanprover/lean4:v4.35.0
+          echo "$HOME/.elan/bin" >> $GITHUB_PATH
+      - name: Clean Lean build, axiom audit, and external kernels
+        working-directory: lean
+        run: |
+          lake build
+          lake env lean VerifyAxioms.lean
+          lake env leanchecker Solution
+          lake env leanchecker-paranoid Solution
+          lake env leanexport Solution -- Solution.prove_all_frontier_theorems > /tmp/solution_export.ndjson
+          con-leche --verified /tmp/solution_export.ndjson
+          con-ron --verified /tmp/solution_export.ndjson
+          rm -f /tmp/solution_export.ndjson
+
+  python-tests-and-manifest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install elan for bundled CaDiCaL 2.1.2
+        run: |
+          curl https://elan.lean-lang.org/elan-init.sh -sSf | sh -s -- -y --default-toolchain leanprover/lean4:v4.35.0
+          echo "CADICAL_BIN=$HOME/.elan/toolchains/leanprover--lean4---v4.35.0/bin/cadical" >> $GITHUB_ENV
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Install pinned dependencies and run pytest
+        run: |
+          pip install -r requirements.lock.txt
+          pytest -v tests/test_all.py
+      - name: Verify SHA-256 provenance manifest
+        run: sha256sum -c MANIFEST.sha256
+
+  latex-paper-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Tectonic and compile white paper + arXiv tarball
+        run: |
+          curl --proto '=https' --tlsv1.2 -fsSL https://drop-sh.fullyjustified.net | sh
+          ./tectonic -X compile paper/main.tex --outdir paper/build
+          mkdir -p /tmp/arxiv_ci
+          tar -xzf dist/arxiv_submission.tar.gz -C /tmp/arxiv_ci
+          ./tectonic -X compile /tmp/arxiv_ci/main.tex --outdir /tmp/arxiv_ci/out

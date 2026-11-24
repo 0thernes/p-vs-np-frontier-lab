@@ -1,0 +1,80 @@
+{
+  "experiment": "exp5_char2_collapse_and_mignon_ressayre",
+  "arithmetic": "exact_integer_rational",
+  "char2_collapse": [
+    {
+      "n": 2,
+      "random_int_matrices_tested": 16,
+      "char2_mismatches": 0,
+      "J_n_perm": 2,
+      "J_n_det": 0,
+      "W_n_perm_mod3": 2,
+      "W_n_det_mod3": 0
+    },
+    {
+      "n": 3,
+      "random_int_matrices_tested": 64,
+      "char2_mismatches": 0,
+      "J_n_perm": 6,
+      "J_n_det": 0,
+      "W_n_perm_mod3": 2,
+      "W_n_det_mod3": 0
+    },
+    {
+      "n": 4,
+      "random_int_matrices_tested": 40,
+      "char2_mismatches": 0,
+      "J_n_perm": 24,
+      "J_n_det": 0,
+      "W_n_perm_mod3": 2,
+      "W_n_det_mod3": 0
+    },
+    {
+      "n": 5,
+      "random_int_matrices_tested": 40,
+      "char2_mismatches": 0,
+      "J_n_perm": 120,
+      "J_n_det": 0,
+      "W_n_perm_mod3": 2,
+      "W_n_det_mod3": 0
+    }
+  ],
+  "mignon_ressayre_hessian": [
+    {
+      "n": 2,
+      "A0_00": -1,
+      "perm_at_A0": 0,
+      "hessian_dim": 4,
+      "exact_hessian_rank_over_Q": 4,
+      "mignon_ressayre_dc_lower_bound_ceil_rk_div_2": 2,
+      "n_squared_div_2": 2.0
+    },
+    {
+      "n": 3,
+      "A0_00": -2,
+      "perm_at_A0": 0,
+      "hessian_dim": 9,
+      "exact_hessian_rank_over_Q": 9,
+      "mignon_ressayre_dc_lower_bound_ceil_rk_div_2": 5,
+      "n_squared_div_2": 4.5
+    },
+    {
+      "n": 4,
+      "A0_00": -3,
+      "perm_at_A0": 0,
+      "hessian_dim": 16,
+      "exact_hessian_rank_over_Q": 16,
+      "mignon_ressayre_dc_lower_bound_ceil_rk_div_2": 8,
+      "n_squared_div_2": 8.0
+    },
+    {
+      "n": 5,
+      "A0_00": -4,
+      "perm_at_A0": 0,
+      "hessian_dim": 25,
+      "exact_hessian_rank_over_Q": 25,
+      "mignon_ressayre_dc_lower_bound_ceil_rk_div_2": 13,
+      "n_squared_div_2": 12.5
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+================================================================================
+MULTI-KERNEL LEAN 4.35.0 FORMAL VERIFICATION AUDIT LOG
+Repository: p-vs-np-frontier-lab (v1.0.0)
+Toolchain:  leanprover/lean4:v4.35.0 (Zero Mathlib, all 13 files use `module`)
+Export:     results/solution_export.ndjson (temporary, deleted after audit)
+            Size:   31,403,462 bytes
+            SHA256: 7F981919BA1055E81695FBEDF2CE4A249F195129453DB3F39AF200EBB1BC764F
+            Target: Solution.prove_all_frontier_theorems (conjoins all 14 theorems)
+            Symbols verified present in export: 15 / 15
+            sorryAx present in export:       False
+            trustCompiler present in export: False
+Forbidden-token scan across lean/**/*.lean (comments stripped):
+            Pattern: sorry | admit | native_decide | implemented_by | ^axiom | @[extern
+            Hits:    0 across 13 files (8,078 total lines; max single file: 2,557 lines)
+================================================================================
+
+[KERNEL 1] lean.exe (C++ Reference Kernel + VerifyAxioms.lean)
+Command:  lake build && lake env lean VerifyAxioms.lean
+ExitCode: 0 (16/16 build jobs, 0 warnings, 0 errors)
+Axioms:   All 15 theorems strictly within [propext, Classical.choice, Quot.sound]
+          (Verbatim output recorded in results/lean_axioms.txt)
+
+[KERNEL 2] leanchecker.exe (C++ External .olean Replay Kernel)
+Command:  lake env leanchecker Solution
+ExitCode: 0
+
+[KERNEL 3] leanchecker-paranoid.exe (C++ Paranoid External .olean Replay Kernel)
+Command:  lake env leanchecker-paranoid Solution
+ExitCode: 0
+
+[KERNEL 4] con-leche.exe --verified (Formally Verified Lean-in-Lean Set-Model Kernel)
+Command:  con-leche --verified solution_export.ndjson
+Output:   con-leche: accepted 3982 declarations (--verified)
+ExitCode: 0
+Soundness theorem: ConLeche.no_False_declaration (set-theoretic model existence)
+
+[KERNEL 5] con-ron.exe --verified (Formally Verified Aeneas-Extracted Rust Arena Kernel)
+Command:  con-ron --verified solution_export.ndjson
+Output:   con-ron: accepted 3982 declarations (--verified)
+ExitCode: 0
+Soundness theorem: ConRon.Capstone.no_False_declaration (verified Rust pipeline)
+
+[KERNEL 6] nanoda_bin.exe 0.4.19 (Independent Rust External Typechecker)
+Command:  nanoda_bin nanoda_config.json
+Config:   permitted_axioms=["propext","Classical.choice","Quot.sound"],
+          unpermitted_axiom_hard_error=true, nat_extension=true, string_extension=true
+Output:   Checked 4319 declarations with no typechecker errors
+ExitCode: 0
+
+--------------------------------------------------------------------------------
+DIAGNOSED UPSTREAM TOOLCHAIN ISSUES (NOT DEFECTS IN THIS FORMALIZATION)
+--------------------------------------------------------------------------------
+[TOOLCHAIN ISSUE A] lean4lean.exe (bundled in leanprover/lean4:v4.35.0 Windows)
+Command:  lake env lean4lean Solution
+Output:   failed to read file '...\Solution.olean', incompatible header
+Control:  lake env lean4lean Init.Prelude
+Output:   failed to read file '...\Init\Prelude.olean', incompatible header
+ExitCode: 1
+Finding:  Classified as upstream `issue`: the lean4lean.exe binary shipped inside
+          leanprover/lean4:v4.35.0 on Windows rejects Lean 4.35.0's own stdlib
+          Init.Prelude.olean due to an upstream .olean header version mismatch.
+
+[TOOLCHAIN ISSUE B] lake check (Windows host)
+Command:  lake check --from-export=... --paranoid --inadvisably-no-sandbox
+Output:   error: 'lake check' needs 'git' on PATH to build inside the sandbox
+ExitCode: 2
+Finding:  Classified as upstream `issue`: lake check's sandbox wrapper requires
+          Linux bwrap and POSIX git. All underlying bundled kernels were invoked
+          directly on Windows and passed (6/6 passing checks above); Linux CI
+          (.github/workflows/ci.yml) runs `lake check` natively.
+================================================================================

@@ -1,0 +1,19 @@
+name = "PVsNPFrontier"
+version = "1.0.0"
+defaultTargets = ["PVsNP", "Challenge", "Solution"]
+
+[leanOptions]
+autoImplicit = false
+relaxedAutoImplicit = false
+
+[[lean_lib]]
+name = "PVsNP"
+roots = ["PVsNP"]
+
+[[lean_lib]]
+name = "Challenge"
+roots = ["Challenge"]
+
+[[lean_lib]]
+name = "Solution"
+roots = ["Solution"]
