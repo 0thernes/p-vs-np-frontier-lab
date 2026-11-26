@@ -1,49 +1,117 @@
-# Build Standard v1.1.0 Machine-Readable Repository Card
-schema_version: "1.1.0"
-name: p-vs-np-frontier-lab
-version: "1.0.0"
-status: active
-epistemic_scope:
-  target_open_problem: "P vs NP (Millennium Prize Problem)"
-  resolution_claimed: false
-  verified_lean_theorems: 14
-  lean_kernels_passed: 6
-  lean_independent_codebases: 5
-author:
-  name: "Alexander S. Donahue"
-  role: "Independent Researcher"
-  location: "Spokane, WA, USA"
-  orcid: "0009-0006-8168-9648"
-  email: "0_0@0thernes.art"
-licenses:
-  code: "Apache-2.0"
-  prose_and_figures: "CC-BY-4.0"
-toolchains:
-  lean: "leanprover/lean4:v4.35.0"
-  python: "3.13.12"
-  sat_solver: "CaDiCaL 2.1.2"
-  latex: "Tectonic (amsart)"
-entrypoints:
-  orchestrator: "scripts/run_all.ps1"
-  lean_challenge: "lean/Challenge.lean"
-  lean_solution: "lean/Solution.lean"
-  lean_axiom_audit: "lean/VerifyAxioms.lean"
-  formalization_ledger: "lean/formalization.yaml"
-  test_suite: "tests/test_all.py"
-  figure_generator: "scripts/make_figures.py"
-  paper_source: "paper/main.tex"
-  frozen_pdf: "dist/Donahue_2026_p_vs_np_barrier_anatomy.pdf"
-  arxiv_tarball: "dist/arxiv_submission.tar.gz"
-  checksum_manifest: "MANIFEST.sha256"
-ci:
-  workflow: ".github/workflows/ci.yml"
-  policy: "informational-only (no branch protection, no PR gate, no Dependabot/Copilot files)"
-governance:
-  claims: "CLAIMS.md"
-  limitations: "LIMITATIONS.md"
-  replication: "REPLICATION.md"
-  security: "SECURITY.md"
-  ten_pass_review: "docs/10-pass-review.md"
-  adrs:
-    - "docs/adr/0001-zero-mathlib-six-kernel-lean.md"
-    - "docs/adr/0002-epistemic-scope-and-identity.md"
+# yaml-language-server: $schema=./repo-standard.schema.json
+# Project manifest for Build Standard for LLMs v1.2.0.
+standard: "1.2.0"
+name: "p-vs-np-frontier-lab"
+description: "Zero-Mathlib Lean 4.35.0 formalization (14 unconditional complexity-barrier, rigidity, circuit phase-transition & catalytic theorems verified across 6 kernels), exact-arithmetic/SAT falsification bench, and 15-page AMS-LaTeX preprint auditing 12 pathways toward P vs. NP. P vs. NP remains open."
+owner: "Alexander S. Donahue (0thernes)"
+year: "2026"
+project_type: research
+stack: [python, other]
+flags:
+  public: true
+  package: false
+  visual: false
+  ui: false
+  native: false
+  ai: false
+  personal_data: false
+  service: false
+  deployed: false
+  api: false
+  perf: false
+  concurrent: false
+  numeric: false
+  experimental: true
+  ml: false
+  formal: true
+items:
+  A01: {status: done, evidence: "README.md"}
+  A02: {status: done, evidence: "README.md badge ribbon"}
+  A03: {status: done, evidence: "README.md Quick-Start Reproduction"}
+  A04: {status: done, evidence: "README.md & REPLICATION.md usage examples"}
+  A05: {status: n/a, note: "Formal verification & AMS-LaTeX research lab with vector PDF figures"}
+  A06: {status: done, evidence: "LICENSE (Apache-2.0 code + CC-BY-4.0 prose/figures)"}
+  A07: {status: done, evidence: "CHANGELOG.md"}
+  A08: {status: done, evidence: "VERSION (1.1.0) matches CHANGELOG.md and CITATION.cff"}
+  A09: {status: done, evidence: "tests/test_all.py"}
+  A10: {status: done, evidence: ".github/workflows/ci.yml"}
+  A11: {status: done, evidence: ".github/workflows/release.yml"}
+  A12: {status: done, evidence: ".gitignore"}
+  A13: {status: done, evidence: ".gitattributes and .editorconfig"}
+  A14: {status: done, evidence: "CONTRIBUTING.md"}
+  A15: {status: done, evidence: "CODE_OF_CONDUCT.md"}
+  A16: {status: done, evidence: "SECURITY.md"}
+  A17: {status: done, evidence: "SUPPORT.md"}
+  A18: {status: done, evidence: ".github/ISSUE_TEMPLATE/{bug,feature,question,config}.yml; zero PR template"}
+  A19: {status: done, evidence: "GitHub About description, homepageUrl, and topics"}
+  A20: {status: done, evidence: "docs/index.md and docs/architecture.md"}
+  A21: {status: done, evidence: "docs/adr/0001-zero-mathlib-six-kernel-lean.md and 0002-epistemic-scope-and-identity.md"}
+  A22: {status: done, evidence: "CITATION.cff"}
+  A23: {status: done, evidence: "main branch with verified solo-researcher identity"}
+  A24: {status: done, evidence: "Zero secrets, build caches, .env, or >5 MB files tracked"}
+  A25: {status: done, evidence: ".github/workflows/ci.yml cross-platform matrix (ubuntu/macos/windows)"}
+  A26: {status: done, evidence: "docs/media/social-preview.svg"}
+  A27: {status: done, evidence: ".github/workflows/pages.yml deploying Proof Blueprint"}
+  A28: {status: n/a, note: "Standalone research repository, not a published library package"}
+  A29: {status: done, evidence: "ROADMAP.md"}
+  A30: {status: done, evidence: ".github/labels.tsv with all 10 finding classes"}
+  A31: {status: done, evidence: "justfile"}
+  A32: {status: done, evidence: "AGENTS.md, CLAUDE.md, GEMINI.md, .cursor/rules/build-standard.mdc, llms.txt, llms-full.txt"}
+  A33: {status: done, evidence: "docs/configuration.md"}
+  A34: {status: n/a, note: "Not a long-running service"}
+  A35: {status: done, evidence: "docs/operations.md documents git bundle and archive submodule mirror"}
+  A36: {status: n/a, note: "Static GitHub Pages only; no backend service"}
+  A37: {status: n/a, note: "No speed or latency performance claims"}
+  A38: {status: n/a, note: "Static research blueprint only; no interactive web application"}
+  A39: {status: done, evidence: "NOTICE and THIRD_PARTY_NOTICES.md"}
+  A40: {status: n/a, note: "Verification scripts call no AI models"}
+  A41: {status: n/a, note: "Not a library with downstream API consumers"}
+  A42: {status: done, evidence: "README.md Maintenance Status"}
+  A43: {status: n/a, note: "Runnable experiments live directly in experiments/"}
+  A44: {status: done, evidence: "docs/faq.md and docs/glossary.md"}
+  A45: {status: n/a, note: "Collects and processes zero personal data"}
+  B01: {status: done, evidence: "justfile reproduce recipe and REPLICATION.md"}
+  B02: {status: done, evidence: "requirements.lock.txt, lean/lean-toolchain, lean/lake-manifest.json"}
+  B03: {status: done, evidence: "Exact deterministic integer/rational/SAT checks and Lean proofs"}
+  B04: {status: done, evidence: "CLAIMS.md"}
+  B05: {status: done, evidence: "C1-C14 in lean/Solution.lean; E1-E10 in tests/test_all.py"}
+  B06: {status: done, evidence: "Negative counterexample and corrupted-uncomputation tests in tests/test_all.py"}
+  B07: {status: done, evidence: "Regression tests covering all prior bugs from docs/10-pass-review.md"}
+  B08: {status: done, evidence: "SHA-256 pinned results/*.json, lean_axioms.txt, and dist/ PDFs in MANIFEST.sha256"}
+  B09: {status: n/a, note: "No external network API"}
+  B10: {status: done, evidence: "Hypothesis property-based tests in tests/test_all.py"}
+  B11: {status: done, evidence: "Exhaustive n=3 brute-force vs CaDiCaL SAT differential check in tests/test_all.py"}
+  B12: {status: done, evidence: "Brute-force truth-table & exact permanent/determinant reference oracles in tests/test_all.py"}
+  B13: {status: done, evidence: "Planted-mutant and axiom-tampering checks in tests/test_all.py"}
+  B14: {status: done, evidence: "Catalytic inversion & char-2 permanent/determinant metamorphic checks in tests/test_all.py"}
+  B15: {status: n/a, note: "No untrusted network/binary parser"}
+  B16: {status: n/a, note: "No custom C/C++/asm code"}
+  B17: {status: done, evidence: "ruff check (report-only) in .github/workflows/ci.yml"}
+  B18: {status: done, evidence: "mypy (report-only) in .github/workflows/ci.yml"}
+  B19: {status: n/a, note: "Single-threaded deterministic verification"}
+  B20: {status: n/a, note: "Exact integer/rational arithmetic; Attack A RK45 explicitly tagged numerical_approximation"}
+  B21: {status: n/a, note: "No networked service"}
+  B22: {status: done, evidence: "lean/ zero-Mathlib Lean 4.35.0 formalization of C1-C14 verified across 6 kernels"}
+  B23: {status: n/a, note: "Mathematical proof library, not a distributed protocol model"}
+  B24: {status: done, evidence: "Lean 4.35.0 machine-checked proofs in lean/PVsNP/ and lean/Solution.lean"}
+  B25: {status: n/a, note: "No native C/Rust implementation"}
+  B26: {status: n/a, note: "No speed or runtime efficiency claims"}
+  B27: {status: n/a, note: "No performance tracking claims"}
+  B28: {status: done, evidence: "Attack A compares planted-SAT arm vs exhaustively UNSAT control arm across fixed seeds"}
+  B29: {status: n/a, note: "Deterministic mathematical theorems and exact integer/SAT checks"}
+  B30: {status: n/a, note: "Exact deterministic counts and algebraic proofs, not sample estimates"}
+  B31: {status: n/a, note: "No multi-hypothesis p-value testing"}
+  B32: {status: n/a, note: "Formal complexity barrier theorems and deterministic falsifiers"}
+  B33: {status: n/a, note: "No ML models trained"}
+  B34: {status: n/a, note: "No generative AI calls"}
+  B35: {status: done, evidence: "gitleaks report-only secret scan in .github/workflows/ci.yml"}
+  B36: {status: done, evidence: "docs/threat-model.md"}
+  B37: {status: done, evidence: "MANIFEST.sha256 and .github/workflows/release.yml SHA256SUMS"}
+  B38: {status: done, evidence: "actions/attest-build-provenance in .github/workflows/ci.yml and release.yml"}
+  B39: {status: done, evidence: "data/MANIFEST.sha256 synchronized with MANIFEST.sha256"}
+  B40: {status: done, evidence: "docs/run-log.md"}
+  B41: {status: done, evidence: "LIMITATIONS.md (including Real vs. Metaphor)"}
+  B42: {status: done, evidence: "CLAIMS.md explicit falsification tests and non-claim boundary"}
+  B43: {status: done, evidence: "REPLICATION.md"}
+  B44: {status: done, evidence: "REPLICATION.md dated replication log"}
+  B45: {status: done, evidence: "docs/reviews/2026-11-25-redteam-v1.1.0.md and docs/10-pass-review.md"}

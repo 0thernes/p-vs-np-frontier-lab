@@ -1,0 +1,21 @@
+name: Feature or archival request
+description: Suggest a metadata schema improvement, preservation check, or archival enhancement.
+labels: ["triage"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What do you need, and why?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+  - type: checkboxes
+    id: roadmap
+    attributes:
+      label: Checks
+      options:
+        - label: I read ROADMAP.md, including "Not Planned".
+          required: true

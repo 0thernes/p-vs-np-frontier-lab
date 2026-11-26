@@ -331,7 +331,7 @@ def test_lean_zero_forbidden_tokens_and_module_headers() -> None:
     lean_files = sorted(
         f for f in LEAN_DIR.rglob("*.lean") if ".lake" not in f.parts
     )
-    assert len(lean_files) == 13
+    assert len(lean_files) == 15  # 14 proof/spec modules + PalomarChallenge.lean
     forbidden = re.compile(r"\b(sorry|admit|native_decide|implemented_by)\b|^\s*axiom\b|@\[extern", re.M)
 
     for f in lean_files:
@@ -343,6 +343,10 @@ def test_lean_zero_forbidden_tokens_and_module_headers() -> None:
         stripped = re.sub(r"--.*", "", stripped)
         first_code = next((ln.strip() for ln in stripped.splitlines() if ln.strip()), "")
         assert first_code == "module", f"{f.name} missing `module` header (found {first_code!r})"
+        if f.name == "PalomarChallenge.lean":
+            # Intentional Palomar comparator challenge contract (excluded from defaultTargets)
+            assert len(lines) <= 1_000
+            continue
         assert forbidden.search(stripped) is None, f"Forbidden token in {f.name}"
 
 
@@ -356,3 +360,91 @@ def test_lean_axioms_strictly_standard() -> None:
     for name, ax_str in matches:
         used = {a.strip() for a in ax_str.split(",") if a.strip()}
         assert used.issubset(allowed), f"{name} used disallowed axioms: {used - allowed}"
+
+
+# ---------------------------------------------------------------------------
+# 7. Build Standard v1.2.0, Playbook v1.3, Property & Mutation Guards
+# ---------------------------------------------------------------------------
+
+def test_build_standard_v12_schema_version_r4_and_identity() -> None:
+    import jsonschema
+    import yaml
+
+    schema = json.loads((ROOT / "repo-standard.schema.json").read_text(encoding="utf-8"))
+    manifest = yaml.safe_load((ROOT / "repo.yaml").read_text(encoding="utf-8"))
+    jsonschema.validate(instance=manifest, schema=schema)
+    assert manifest["standard"] == "1.2.0"
+
+    ver = (ROOT / "VERSION").read_text(encoding="utf-8").strip()
+    assert re.fullmatch(r"\d+\.\d+\.\d+", ver)
+    changelog = (ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
+    assert re.search(rf"^## \[?v?{re.escape(ver)}\]?", changelog, re.M)
+    cff = yaml.safe_load((ROOT / "CITATION.cff").read_text(encoding="utf-8"))
+    assert str(cff["version"]) == ver
+
+    for banned in (
+        ".github/PULL_REQUEST_TEMPLATE.md",
+        ".github/pull_request_template.md",
+        ".github/dependabot.yml",
+        "renovate.json",
+        ".github/copilot-instructions.md",
+        ".github/FUNDING.yml",
+    ):
+        assert not (ROOT / banned).exists(), f"R4 banned file present: {banned}"
+
+    for rel in ("README.md", "CITATION.cff", "LICENSE", "NOTICE", "AGENTS.md", "CLAIMS.md", "LIMITATIONS.md"):
+        assert "0thernes LLC" not in (ROOT / rel).read_text(encoding="utf-8")
+
+    comp = json.loads((LEAN_DIR / "comparator.json").read_text(encoding="utf-8"))
+    assert comp["challenge_module"] == "PalomarChallenge"
+    assert comp["solution_module"] == "PalomarSolution"
+    assert len(comp["theorem_names"]) == 15
+    assert set(comp["permitted_axioms"]).issubset({"propext", "Classical.choice", "Quot.sound"})
+
+    m1 = (ROOT / "MANIFEST.sha256").read_text(encoding="utf-8").strip()
+    m2 = (ROOT / "data" / "MANIFEST.sha256").read_text(encoding="utf-8").strip()
+    assert m1 == m2
+
+
+def test_property_char2_perm_det_and_catalytic_reversibility() -> None:
+    from hypothesis import given, settings
+    from hypothesis import strategies as st
+
+    @given(
+        mat=st.lists(
+            st.lists(st.integers(min_value=-5, max_value=5), min_size=3, max_size=3),
+            min_size=3,
+            max_size=3,
+        )
+    )
+    @settings(max_examples=120, derandomize=True)
+    def check_perm_det_mod2(mat: list[list[int]]) -> None:
+        assert exp5.exact_perm(mat) % 2 == exp5.exact_det(mat) % 2
+
+    check_perm_det_mod2()
+
+    # Planted mutant test (B13): flipping a single sign breaks catalytic restoration
+    @given(
+        r0=st.integers(min_value=-100, max_value=100),
+        r1=st.integers(min_value=-100, max_value=100),
+        x0=st.integers(min_value=1, max_value=20),
+        x1=st.integers(min_value=1, max_value=20),
+    )
+    @settings(max_examples=120, derandomize=True)
+    def check_catalytic_2reg_exact(r0: int, r1: int, x0: int, x1: int) -> None:
+        # Exact d=2 zero-workspace bilinear catalytic gadget:
+        # r1 += r0*x0; dst += r1*x1; r1 -= r0*x0; dst -= r1*x1 -> dst += r0*x0*x1 (Wait: standard 4-step)
+        dst0 = 17
+        a, b = r0, r1
+        dst = dst0
+        b += x0 * a
+        dst += x1 * b
+        b -= x0 * a
+        dst -= x1 * b
+        assert a == r0 and b == r1
+        assert dst == dst0 + x0 * x1 * r0
+        # Mutant: drop the final uncompute step -> fails whenever x1*r1 != 0
+        if r1 != 0:
+            assert (dst + x1 * b) != dst0 + x0 * x1 * r0
+
+    check_catalytic_2reg_exact()

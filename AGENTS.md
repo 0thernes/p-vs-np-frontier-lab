@@ -1,33 +1,26 @@
+<!-- SPDX-License-Identifier: CC-BY-4.0 -->
 # AGENTS.md — Canonical Agent & Maintainer Entry Point
 
-<!-- SPDX-License-Identifier: CC-BY-4.0 -->
+- **Project:** `p-vs-np-frontier-lab` — Machine-Checked Barrier Anatomy and Twelve Divergent Pathways Toward P vs. NP (`v1.1.0`)
+- **Repository:** `https://github.com/0thernes/p-vs-np-frontier-lab` · **Master Archive:** `0thernes/0thernes-research-archive` (`0TH-2026-013`)
+- **Author:** Alexander S. Donahue (`Independent Researcher, Spokane, WA, USA`, ORCID `0009-0006-8168-9648`, `0_0@0thernes.art`). Never assert an unformed LLC entity.
+- **Epistemic Status of P vs NP:** **COMPLETELY OPEN.** This repository proves **neither** `P = NP` **nor** `P != NP`. All 14 Lean 4.35.0 theorems (`C1`–`C14`) establish unconditional complexity barriers, polymorphism rigidity, circuit phase transitions, and zero-workspace catalytic algebra.
 
-- **Project:** `p-vs-np-frontier-lab` — Anatomy of the P versus NP Barrier Wall: Six-Kernel Lean 4.35.0 Formalization, Exact Computational Falsification Suite, and Adversarial Audit of Unconventional Approaches
-- **Author:** Alexander S. Donahue (independent researcher), ORCID `0009-0006-8168-9648`, Spokane, WA, USA (`0_0@0thernes.art`)
-- **Current Build Pipeline Phase:** `P6–P7` (Build & Verify; P0–P5 completed and documented in `docs/plan/` and `docs/adr/`)
-- **Target Profile:** Research Formalization + Exact Computational Verification Lab (zero-Mathlib Lean 4.35.0 + Python 3.13 + CaDiCaL 2.1.2 + Tectonic AMS-LaTeX)
-- **Epistemic Status of P vs NP:** **COMPLETELY OPEN.** This repository proves **neither** `P = NP` **nor** `P ≠ NP`. Every claim is tagged in `CLAIMS.md` as `kernel-checked`, `certificate-checked`, `exact-computation`, `numerical-approximation`, `paper-proof`, or `open-conjecture`.
+## Hard Rules (`R1`–`R8`)
 
-## Non-Negotiable Rules
+1. Commit and push straight to `main` (`R1`/`R2`); CI is informational only (`R3`); zero banned files (`PULL_REQUEST_TEMPLATE.md`, `dependabot.yml`, `copilot-instructions.md`, `FUNDING.yml`) (`R4`).
+2. Never fabricate outputs, Lean axioms, DOIs, or peer-review claims (`R6`).
+3. Classify every finding under exactly one of the 10 Build Standard v1.2.0 classes (`R7`; `docs/glossary.md`): `bug`, `error`, `issue`, `problem`, `concern`, `dilemma`, `conflict`, `gap`, `hole`, `blindspot`.
+4. Zero `sorry`, `admit`, `native_decide`, custom `axiom`, `implemented_by`, or `@[extern]` in all proof modules (`lean/PVsNP/*`, `Challenge.lean`, `Solution.lean`, `PalomarSolution.lean`). Only `lean/PalomarChallenge.lean` (excluded from `defaultTargets`) contains intentional comparator challenge placeholders matched against sorry-free `PalomarSolution.lean`.
+5. PowerShell bracket-safety (Windows ReFS `Z:\[Vibe Coded (AI)]`): always use `-LiteralPath` in PowerShell file cmdlets.
 
-1. **Zero fabrication & zero overclaiming:** Never claim to have proved `P = NP` or `P ≠ NP`, never invent numbers, DOIs, or citations, and never claim a check passed without running it in the current tree.
-2. **Formal verification hygiene:** Zero `sorry`, zero `admit`, zero `native_decide`, zero custom `axiom`, zero `implemented_by` or `@[extern]`. Every headline theorem in `lean/Challenge.lean` and `lean/Solution.lean` must report `#print axioms` strictly within `[propext, Classical.choice, Quot.sound]` and pass replay through Lean 4.35.0 (`lean`, `leanchecker-paranoid`, `lean4lean`, `nanoda_bin`, `con-leche`, `con-ron`) and `lake comparator`.
-3. **PowerShell bracket-safety (Windows `Z:\[Vibe Coded (AI)]`):** Always pass `-LiteralPath` to PowerShell file cmdlets.
-4. **Finding classification:** Classify every finding as exactly one of: `bug`, `error`, `issue`, `problem`, `dilemma`, `conflict`.
-5. **Commit workflow:** Small, reversible commits straight to `main`; informational CI only (no blocking gates, no PR templates, no Dependabot, no `.github/copilot-instructions.md`).
-6. **Legal & entity accuracy:** Use `Alexander S. Donahue (independent researcher)` — do not assert an unformed LLC as author, affiliation, or copyright holder (see `docs/adr/0002-epistemic-scope-and-identity.md`).
+## Core Commands
 
-## One-Command Verification (`scripts/run_all.ps1` / `scripts/run_all.sh`)
-
-- `pwsh -File scripts/run_all.ps1 -Task test` — run full Python exact-computation and falsification test suite (`pytest`)
-- `pwsh -File scripts/run_all.ps1 -Task lean` — clean Lean 4.35.0 build + forbidden-token audit + `#print axioms` + 6-kernel verification + `lake comparator`
-- `pwsh -File scripts/run_all.ps1 -Task experiments` — regenerate all exact computational experiments (`results/*.json`) and publication vector figures (`paper/figures/*.pdf`)
-- `pwsh -File scripts/run_all.ps1 -Task paper` — compile AMS-LaTeX white paper (`paper/main.tex` → `dist/Donahue_2026_p_vs_np_barrier_anatomy.pdf`) and arXiv tarball
-- `pwsh -File scripts/run_all.ps1 -Task all` — run everything end-to-end and verify `MANIFEST.sha256`
-
-## Reference Standards
-
-- Defensible Independent AI Research Playbook (`I:\White Papers\DEFENSIBLE_INDEPENDENT_AI_RESEARCH_PLAYBOOK.md`)
-- Build Standard for LLMs v1.1.0 (`I:\All GH Repos\Repo Checklist\build-standard\build-standard.md`)
-- Build Pipeline Models v1.0.0 (`I:\All GH Repos\Build Pipeline Models\build-pipeline-models\checklist.md`)
-- Unsolved Mathematics Atlas P vs NP dossier (`Z:\[Vibe Coded (AI)]\CLAUDECODE\Unresolved Math Problems\problems\p-versus-np\`)
+```bash
+just lean        # Clean zero-Mathlib Lean 4.35.0 build + verbatim #print axioms
+just test        # Run pytest exact-arithmetic, brute-force SAT, Hypothesis & negative suite
+just axioms      # Verify verbatim #print axioms parity between README.md and results/lean_axioms.txt
+just site        # Build WCAG 2.2 AA static Proof Blueprint site at build/site/
+just reproduce   # Run tests, axiom parity, blueprint build, SHA-256 check, and Build Standard audit
+just audit       # Score repository against Build Standard v1.2.0 (docs/build-standard.md)
+```

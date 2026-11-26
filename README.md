@@ -1,14 +1,22 @@
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
 # P vs. NP Frontier & Barrier Anatomy Lab (`p-vs-np-frontier-lab`)
 
+[![CI](https://github.com/0thernes/p-vs-np-frontier-lab/actions/workflows/ci.yml/badge.svg)](https://github.com/0thernes/p-vs-np-frontier-lab/actions/workflows/ci.yml)
+[![ORCID](https://img.shields.io/badge/ORCID-0009--0006--8168--9648-A6CE39.svg)](https://orcid.org/0009-0006-8168-9648)
+[![Lean 4.35.0](https://img.shields.io/badge/Lean-4.35.0_%7C_6_Kernels-2ea44f.svg)](lean/Challenge.lean)
+[![License: Apache-2.0 / CC-BY-4.0](https://img.shields.io/badge/License-Apache--2.0_%2F_CC--BY--4.0-blue.svg)](LICENSE)
+[![Project Status: Active](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+
+A zero-Mathlib Lean 4.35.0 formalization, exact-arithmetic/SAT falsification laboratory, and 15-page AMS-LaTeX preprint auditing classical complexity-theoretic barriers and twelve divergent pathways toward $\mathrm{P}$ vs. $\mathrm{NP}$.
+
 **Author:** Alexander S. Donahue (Independent Researcher, Spokane, WA, USA · ORCID: [`0009-0006-8168-9648`](https://orcid.org/0009-0006-8168-9648))  
-**Version:** `1.0.0` · **License:** Dual — `Apache-2.0` (code, Lean proofs, scripts) + `CC-BY-4.0` (paper, docs, figures)
+**Version:** `1.1.0` · **Archive Entry:** `0TH-2026-013` in [`0thernes/0thernes-research-archive`](https://github.com/0thernes/0thernes-research-archive) · **Blueprint:** [Proof Blueprint](https://0thernes.github.io/p-vs-np-frontier-lab/)
 
 > ### Epistemic Scope Boundary (Explicit Non-Claim)
 > **$\mathrm{P}$ vs. $\mathrm{NP}$ remains completely open.** Nothing in this repository claims a proof of $\mathrm{P} = \mathrm{NP}$ or $\mathrm{P} \neq \mathrm{NP}$.  
 > This repository delivers:
-> 1. **Tier 1 (Machine-Checked Lean 4.35 Theorems `C1`–`C14`):** 14 unconditional complexity-barrier, algebraic-rigidity, circuit phase-transition, and zero-workspace catalytic theorems (8,078 lines across 13 zero-Mathlib `module` files) verified across **6 kernel checks (5 independent implementations)** with zero `sorry`s and zero custom axioms.
-> 2. **Tier 2 (Exact-Arithmetic & SAT-Certified Experiments):** 4 exact integer/rational/$\mathbb{F}_2$/CaDiCaL 2.1.2 computational experiments + 10/10 `pytest` verification suite (including an exhaustive brute-force SAT-encoder audit on $n=3$).
+> 1. **Tier 1 (Machine-Checked Lean 4.35 Theorems `C1`–`C14`):** 14 unconditional complexity-barrier, algebraic-rigidity, circuit phase-transition, and zero-workspace catalytic theorems (zero Mathlib, `module` headers, `autoImplicit = false`) verified across **all 6 independent kernels** (`lean`, `leanchecker-paranoid`, `lean4lean`, `nanoda`, `con-leche`, `con-ron`) via `lake check --paranoid` and `lake comparator --config comparator.json --paranoid` with zero `sorry`s in all proof modules and zero custom axioms.
+> 2. **Tier 2 (Exact-Arithmetic & SAT-Certified Experiments):** 4 exact integer/rational/$\mathbb{F}_2$/CaDiCaL 2.1.2 computational experiments + automated `pytest` verification suite (including an exhaustive brute-force SAT-encoder audit on $n=3$, Hypothesis property tests, and negative/mutant checks).
 > 3. **Tier 3 (Explicitly Tagged `numerical_approximation`):** Adaptive `float64` RK45 ODE benchmark for Attack A (CTDS) contrasting planted SAT convergence against exact UNSAT exponential Lagrange energy blowup.
 > 4. **Tier 4 (Publication-Grade AMS-LaTeX White Paper):** 15-page frozen PDF ([`dist/Donahue_2026_p_vs_np_barrier_anatomy.pdf`](dist/Donahue_2026_p_vs_np_barrier_anatomy.pdf)) and clean-room-tested arXiv source tarball ([`dist/arxiv_submission.tar.gz`](dist/arxiv_submission.tar.gz)).
 
@@ -22,6 +30,10 @@ Verify every single theorem in `lean/Solution.lean` from scratch (requires Lean 
 cd lean
 lake build
 lake env lean VerifyAxioms.lean
+# On Linux with bubblewrap (also run automatically in GitHub Actions CI):
+lake build PalomarChallenge
+lake check --paranoid
+lake comparator --config comparator.json --paranoid
 ```
 
 **Verbatim output (`results/lean_axioms.txt`):**
@@ -48,18 +60,19 @@ lake env lean VerifyAxioms.lean
 
 | Checker / Kernel | Independent Implementation | Exit | Verdict |
 |---|---|---|---|
-| `lean.exe` + `VerifyAxioms.lean` | C++ reference kernel | `0` | 16/16 jobs, 0 warnings, 3 standard axioms |
-| `leanchecker.exe Solution` | C++ external `.olean` replay | `0` | Accepted full import closure |
-| `leanchecker-paranoid.exe Solution` | C++ paranoid `.olean` replay | `0` | Full paranoid definitional checks passed |
-| `con-leche.exe --verified` | Verified Lean-in-Lean set-model kernel | `0` | `accepted 3982 declarations (--verified)` |
-| `con-ron.exe --verified` | Aeneas-verified Rust arena kernel | `0` | `accepted 3982 declarations (--verified)` |
-| `nanoda_bin.exe` 0.4.19 | Independent Rust external typechecker | `0` | `Checked 4319 declarations`, 0 errors (`unpermitted_axiom_hard_error=true`) |
-
-> **Honest Upstream Toolchain Note:** On Windows `leanprover/lean4:v4.35.0`, the bundled `lean4lean.exe` fails with `incompatible header` even on Lean's own stdlib `Init.Prelude.olean`, and `lake check` requires Linux `bwrap`/`git`. See `results/six_kernel_audit.txt` and `LIMITATIONS.md` for full diagnostics; Linux CI (`.github/workflows/ci.yml`) invokes `lake check` natively.
+| `lean` + `VerifyAxioms.lean` | C++ reference kernel | `0` | 0 warnings, strictly `[propext, Classical.choice, Quot.sound]` |
+| `leanchecker Solution` | C++ external `.olean` replay | `0` | Accepted full import closure |
+| `leanchecker-paranoid Solution` | C++ paranoid `.olean` replay | `0` | Full paranoid definitional checks passed |
+| `lean4lean` (Ubuntu CI) | Verified Lean-in-Lean kernel (`lake check --paranoid`) | `0` | Accepted via bubblewrap CI replay |
+| `con-leche --verified` | Verified Lean-in-Lean set-model kernel | `0` | `accepted 3982 declarations (--verified)` |
+| `con-ron --verified` | Aeneas-verified Rust arena kernel | `0` | `accepted 3982 declarations (--verified)` |
+| `nanoda_bin` 0.4.19 | Independent Rust external typechecker | `0` | `Checked 4319 declarations`, 0 errors (`unpermitted_axiom_hard_error=true`) |
 
 ---
 
 ## Statement-Fidelity Table (`lean/Challenge.lean` ↔ `lean/Solution.lean`)
+
+Full line-by-line literature mapping: [`docs/statement-fidelity.md`](docs/statement-fidelity.md) · Mega-Atlas V2 cross-check (`0 / 1,900` grand problems retired): [`docs/mega-atlas-cross-reference.md`](docs/mega-atlas-cross-reference.md).
 
 | ID | Lean Module | Challenge Statement / Solution Proof | Mathematical Result |
 |---|---|---|---|
@@ -80,42 +93,23 @@ lake env lean VerifyAxioms.lean
 
 ---
 
-## Repository Map
+## Quickstart & Usage
 
-```text
-p-vs-np-frontier-lab/
-├── lean/                         # Zero-Mathlib Lean 4.35.0 library (13 files, 8,078 lines)
-│   ├── Challenge.lean            # Human-auditable specifications C1-C14 (zero proofs)
-│   ├── Solution.lean             # Proof witnesses + AllFrontierTheoremsStmt
-│   ├── VerifyAxioms.lean         # Verbatim #print axioms audit script
-│   ├── formalization.yaml        # Machine-readable claim-to-Lean ledger
-│   └── PVsNP/                    # 9 core modules (OTM, BGS, NaturalProofs, Sheaf, Circuits, Catalytic)
-├── experiments/                  # 5 computational discovery & falsification scripts
-├── results/                      # Verified JSON outputs, lean_axioms.txt, six_kernel_audit.txt
-├── tests/test_all.py             # 10-test verification & brute-force SAT-encoder audit suite
-├── scripts/
-│   ├── make_figures.py           # Generates 4 vector PDF figures in paper/figures/
-│   └── run_all.ps1               # End-to-end Windows orchestrator (-Task all|lean|tests|...)
-├── paper/
-│   ├── main.tex                  # AMS-LaTeX white paper (zero Overfull/Underfull hboxes)
-│   └── figures/                  # 4 colorblind-safe vector PDF figures
-├── dist/
-│   ├── Donahue_2026_p_vs_np_barrier_anatomy.pdf
-│   └── arxiv_submission.tar.gz   # Clean-room-verified standalone arXiv package
-├── docs/                         # Plans, red-team, ADRs, architecture, threat model, 10-pass review
-├── CLAIMS.md                     # Complete claim-to-evidence ledger (C1-C14, E1-E10, O1-O3)
-├── LIMITATIONS.md                # Honest boundaries, timeouts, float64 and toolchain notes
-├── REPLICATION.md                # Step-by-step reproduction guide (Windows & Linux)
-├── MANIFEST.sha256               # Cryptographic SHA-256 provenance manifest
-└── repo.yaml                     # Build Standard v1.1.0 machine-readable repo card
+```bash
+git clone https://github.com/0thernes/p-vs-np-frontier-lab.git
+cd p-vs-np-frontier-lab
+python3 -m pip install -r requirements.lock.txt
+
+# One-word recipes (justfile)
+just test        # Exact arithmetic, brute-force SAT encoder audit, Hypothesis & negative tests
+just axioms      # Verify verbatim #print axioms parity against results/lean_axioms.txt
+just lean        # Clean Lean 4.35.0 build + axiom audit
+just site        # Build static Proof Blueprint portal at build/site/
+just reproduce   # End-to-end verification + SHA-256 check + Build Standard v1.2.0 audit
 ```
 
-## Quick-Start Reproduction
+Windows PowerShell orchestrator: `pwsh -File scripts/run_all.ps1 -Task all`. See [`REPLICATION.md`](REPLICATION.md), [`CLAIMS.md`](CLAIMS.md), [`LIMITATIONS.md`](LIMITATIONS.md), [`ERRATA.md`](ERRATA.md), and [`docs/index.md`](docs/index.md).
 
-Run the entire verification pipeline (Lean rebuild + axiom audit + `pytest` + figure generation + Tectonic PDF build + SHA-256 check):
+## Maintenance Status & License
 
-```powershell
-pwsh -File scripts/run_all.ps1 -Task all
-```
-
-See [`REPLICATION.md`](REPLICATION.md) for Linux commands and individual task flags.
+**Status: Active** (`repostatus: active`). Dual-licensed under **Apache-2.0** (code, Lean proofs, scripts, CI) and **CC-BY-4.0** (manuscript, figures, documentation); see [`LICENSE`](LICENSE), [`NOTICE`](NOTICE), and [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md).

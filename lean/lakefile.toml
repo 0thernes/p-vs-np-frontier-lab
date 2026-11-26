@@ -1,6 +1,6 @@
 name = "PVsNPFrontier"
-version = "1.0.0"
-defaultTargets = ["PVsNP", "Challenge", "Solution"]
+version = "1.1.0"
+defaultTargets = ["PVsNP", "Challenge", "Solution", "PalomarSolution"]
 
 [leanOptions]
 autoImplicit = false
@@ -17,3 +17,11 @@ roots = ["Challenge"]
 [[lean_lib]]
 name = "Solution"
 roots = ["Solution"]
+
+[[lean_lib]]
+name = "PalomarChallenge"
+roots = ["PalomarChallenge"]
+
+[[lean_lib]]
+name = "PalomarSolution"
+roots = ["PalomarSolution"]

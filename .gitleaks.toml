@@ -1,0 +1,13 @@
+title = "gitleaks config for p-vs-np-frontier-lab"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Allow SHA-256 digests and static audit tooling"
+paths = [
+  '''MANIFEST\.sha256''',
+  '''data/MANIFEST\.sha256''',
+  '''scripts/audit-repo\.sh''',
+  '''scripts/Audit-Repo\.ps1''',
+]

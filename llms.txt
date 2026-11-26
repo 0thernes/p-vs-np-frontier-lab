@@ -1,18 +1,17 @@
 # p-vs-np-frontier-lab
 
-> Machine-Checked Barrier Anatomy and Twelve Divergent Pathways Toward P vs. NP.
-> Author: Alexander S. Donahue (Independent Researcher, ORCID 0009-0006-8168-9648).
-> Epistemic Scope: P vs. NP remains OPEN. Zero claims of P = NP or P != NP.
+> Machine-checked zero-Mathlib Lean 4.35.0 formalization of 14 unconditional complexity-barrier, polymorphism-rigidity, circuit phase-transition, and catalytic-algebra theorems (verified across 6 independent kernels), exact-arithmetic/SAT falsification bench, and 15-page AMS-LaTeX preprint auditing twelve divergent pathways toward P vs. NP. P vs. NP remains completely open.
 
-## Core Artifacts
-- [README.md](README.md): Overview, 5-second Lean axiom check, Statement-Fidelity Table, repo map.
-- [CLAIMS.md](CLAIMS.md): Machine-auditable ledger of Tier-1 Lean theorems (C1-C14), Tier-2/3 experiments (E1-E10), and Tier-4 open frontiers (O1-O3).
-- [LIMITATIONS.md](LIMITATIONS.md): Explicit boundaries, CTDS float64 disclaimer, CLIQUE_4_3 open bound, upstream Windows Lean 4.35 toolchain notes.
-- [REPLICATION.md](REPLICATION.md): Exact Windows and Linux clean-room reproduction commands.
-- [lean/Challenge.lean](lean/Challenge.lean): Human-auditable specifications of all 14 unconditional theorems (zero proofs).
-- [lean/Solution.lean](lean/Solution.lean): Witness terms proving C1-C14 and AllFrontierTheoremsStmt (zero Mathlib, zero sorry).
-- [lean/formalization.yaml](lean/formalization.yaml): Structured mapping of C1-C14 to Lean modules, verbatim axioms, and 6-kernel audit verdicts.
-- [results/six_kernel_audit.txt](results/six_kernel_audit.txt): Verbatim multi-kernel verification log (lean, leanchecker, leanchecker-paranoid, con-leche --verified, con-ron --verified, nanoda_bin).
-- [tests/test_all.py](tests/test_all.py): 10-test verification suite including exhaustive brute-force SAT-encoder audit on n=3.
-- [paper/main.tex](paper/main.tex): 15-page AMS-LaTeX white paper (zero Overfull/Underfull hboxes).
-- [docs/10-pass-review.md](docs/10-pass-review.md): Complete 10-pass adversarial audit and six-class findings catalog.
+## Key Entry Points
+- [README.md](README.md): Executive summary, 5-second verbatim `#print axioms` check, statement-fidelity table, Quickstart.
+- [AGENTS.md](AGENTS.md): Canonical instructions, Build Standard v1.2.0 hard rules (`R1`–`R8`), and one-word commands.
+- [CLAIMS.md](CLAIMS.md): Complete tiered claims ledger (`C1`–`C14`, `E1`–`E10`, `O1`–`O3`).
+- [LIMITATIONS.md](LIMITATIONS.md): Epistemic boundaries, timeouts, float64 disclosures, and Real vs. Metaphor.
+- [REPLICATION.md](REPLICATION.md): Clean-room reproduction commands and dated replication log.
+- [ERRATA.md](ERRATA.md): Append-only errata and withdrawal plan.
+- [lean/Challenge.lean](lean/Challenge.lean): Human-auditable specifications of `C1`–`C14` + `AllFrontierTheoremsStmt`.
+- [lean/Solution.lean](lean/Solution.lean): Zero-sorry Lean 4.35.0 proof witnesses.
+- [lean/comparator.json](lean/comparator.json): 15-target 6-kernel Palomar Comparator configuration.
+- [docs/statement-fidelity.md](docs/statement-fidelity.md): Line-by-line Lean-to-literature fidelity table.
+- [docs/mega-atlas-cross-reference.md](docs/mega-atlas-cross-reference.md): Honest `0 / 1,900` Unsolved Problems Mega-Atlas cross-check.
+- [MANIFEST.sha256](MANIFEST.sha256): Byte-exact SHA-256 provenance manifest.

@@ -1,0 +1,8 @@
+p-vs-np-frontier-lab
+Copyright 2026 Alexander S. Donahue (Independent Researcher, Spokane, WA, USA)
+ORCID: https://orcid.org/0009-0006-8168-9648
+Repository: https://github.com/0thernes/p-vs-np-frontier-lab
+
+Dual License:
+- Code, Lean 4 formal proofs, verification scripts, tests, CI: Apache-2.0 (see LICENSE)
+- White paper, figures, documentation, datasets: CC-BY-4.0 (https://creativecommons.org/licenses/by/4.0/)

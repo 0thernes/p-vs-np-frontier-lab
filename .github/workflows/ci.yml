@@ -1,6 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-# Informational-only verification workflow (Build Standard v1.1.0:
-# no branch protection, no required PR gates, commits land straight on main).
+# Informational-only verification workflow (Build Standard v1.2.0: R1-R4).
 name: verify-p-vs-np-frontier-lab
 
 on:
@@ -8,56 +7,125 @@ on:
     branches: [main]
   workflow_dispatch:
 
+concurrency:
+  group: p-vs-np-ci-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: read
+  id-token: write
+  attestations: write
 
 jobs:
-  lean-multi-kernel:
+  lean-6kernel:
+    name: Zero-Mathlib Lean 4.35.0 (15 Targets & 6-Kernel Palomar Comparator)
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
-      - name: Install elan and Lean 4.35.0
+      - name: Install bubblewrap for sandboxed multi-kernel replay
+        run: sudo apt-get update && sudo apt-get install -y bubblewrap
+      - name: Install elan and pinned Lean 4.35.0 toolchain
         run: |
-          curl https://elan.lean-lang.org/elan-init.sh -sSf | sh -s -- -y --default-toolchain leanprover/lean4:v4.35.0
-          echo "$HOME/.elan/bin" >> $GITHUB_PATH
-      - name: Clean Lean build, axiom audit, and external kernels
+          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Clean Lean build, axiom audit, 6-kernel lake check & lake comparator
         working-directory: lean
         run: |
           lake build
-          lake env lean VerifyAxioms.lean
-          lake env leanchecker Solution
-          lake env leanchecker-paranoid Solution
-          lake env leanexport Solution -- Solution.prove_all_frontier_theorems > /tmp/solution_export.ndjson
-          con-leche --verified /tmp/solution_export.ndjson
-          con-ron --verified /tmp/solution_export.ndjson
-          rm -f /tmp/solution_export.ndjson
+          lake build PalomarChallenge
+          lake env lean VerifyAxioms.lean | tee /tmp/lean_axioms.txt
+          COUNT=$(grep -cE "depends on axioms:|does not depend on any axioms" /tmp/lean_axioms.txt)
+          echo "Audited theorem count: $COUNT"
+          test "$COUNT" -eq 15
+          if grep -E "sorryAx|ofReduceBool|trustCompiler|_native" /tmp/lean_axioms.txt; then
+            echo "FORBIDDEN AXIOM DETECTED" >&2
+            exit 1
+          fi
+          lake env leanchecker --fresh Solution
+          lake env leanchecker-paranoid --fresh Solution
+          lake check --paranoid
+          lake comparator --config comparator.json --paranoid
 
-  python-tests-and-manifest:
-    runs-on: ubuntu-latest
+  python-matrix:
+    name: Exact Arithmetic, SAT Audit & Integrity Tests (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
     steps:
       - uses: actions/checkout@v4
-      - name: Install elan for bundled CaDiCaL 2.1.2
+      - name: Install elan for bundled CaDiCaL 2.1.2 (Ubuntu)
+        if: matrix.os == 'ubuntu-latest'
         run: |
-          curl https://elan.lean-lang.org/elan-init.sh -sSf | sh -s -- -y --default-toolchain leanprover/lean4:v4.35.0
-          echo "CADICAL_BIN=$HOME/.elan/toolchains/leanprover--lean4---v4.35.0/bin/cadical" >> $GITHUB_ENV
+          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain leanprover/lean4:v4.35.0
+          echo "CADICAL_BIN=$HOME/.elan/toolchains/leanprover--lean4---v4.35.0/bin/cadical" >> "$GITHUB_ENV"
       - uses: actions/setup-python@v5
         with:
           python-version: "3.13"
-      - name: Install pinned dependencies and run pytest
+      - name: Install pinned Python dependencies
+        run: python -m pip install -r requirements.lock.txt
+      - name: Run pytest suite & README axiom parity check
         run: |
-          pip install -r requirements.lock.txt
-          pytest -v tests/test_all.py
-      - name: Verify SHA-256 provenance manifest
-        run: sha256sum -c MANIFEST.sha256
+          python -m pytest -v tests/test_all.py
+          python scripts/check_readme_axioms.py
+          python scripts/build_blueprint.py
+      - name: Verify SHA-256 provenance manifest (Unix)
+        if: runner.os != 'Windows'
+        run: |
+          sha256sum -c MANIFEST.sha256
+          sha256sum -c data/MANIFEST.sha256
 
-  latex-paper-build:
+  latex-paper-and-provenance:
+    name: AMS-LaTeX White Paper, arXiv Bundle & SLSA Attestation
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
-      - name: Install Tectonic and compile white paper + arXiv tarball
+      - name: Install Tectonic and compile white paper + standalone arXiv tarball
         run: |
           curl --proto '=https' --tlsv1.2 -fsSL https://drop-sh.fullyjustified.net | sh
           ./tectonic -X compile paper/main.tex --outdir paper/build
           mkdir -p /tmp/arxiv_ci
           tar -xzf dist/arxiv_submission.tar.gz -C /tmp/arxiv_ci
           ./tectonic -X compile /tmp/arxiv_ci/main.tex --outdir /tmp/arxiv_ci/out
+      - name: Generate SHA256SUMS and attest build provenance (SLSA)
+        run: |
+          sha256sum dist/Donahue_2026_p_vs_np_barrier_anatomy.pdf dist/arxiv_submission.tar.gz MANIFEST.sha256 > SHA256SUMS
+          cat SHA256SUMS
+      - uses: actions/attest-build-provenance@v2
+        continue-on-error: true
+        with:
+          subject-path: |
+            dist/Donahue_2026_p_vs_np_barrier_anatomy.pdf
+            dist/arxiv_submission.tar.gz
+            MANIFEST.sha256
+            SHA256SUMS
+
+  lint-audit-security:
+    name: Report-Only Linters, Secret Scan & Build Standard v1.2.0 Audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Report-only ruff & mypy
+        continue-on-error: true
+        run: |
+          python -m pip install ruff mypy
+          python -m ruff check experiments/ scripts/ tests/
+          python -m mypy --ignore-missing-imports scripts/ tests/
+      - name: Build Standard v1.2.0 self-audit
+        continue-on-error: true
+        run: bash scripts/audit-repo.sh .
+      - name: Secret scan (gitleaks, report-only)
+        uses: gitleaks/gitleaks-action@v2
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

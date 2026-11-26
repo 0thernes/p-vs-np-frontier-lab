@@ -1,0 +1,35 @@
+# SPDX-License-Identifier: Apache-2.0
+# Informational live sync trigger to 0thernes/0thernes-research-archive (R1/R3: never fails CI).
+name: Notify Master Research Archive (Live Sync)
+
+on:
+  push:
+    branches: [main]
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  dispatch-archive-sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    continue-on-error: true
+    steps:
+      - name: Dispatch repository_dispatch to 0thernes/0thernes-research-archive
+        env:
+          ARCHIVE_SYNC_TOKEN: ${{ secrets.ARCHIVE_SYNC_TOKEN }}
+        run: |
+          if [ -z "$ARCHIVE_SYNC_TOKEN" ]; then
+            echo "ARCHIVE_SYNC_TOKEN not configured; archive scheduled live-sync will pick up this update automatically."
+            exit 0
+          fi
+          curl -fsSL -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${ARCHIVE_SYNC_TOKEN}" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/0thernes/0thernes-research-archive/dispatches" \
+            -d "{\"event_type\":\"upstream-repo-updated\",\"client_payload\":{\"repo\":\"${GITHUB_REPOSITORY}\",\"sha\":\"${GITHUB_SHA}\",\"ref\":\"${GITHUB_REF}\"}}"
+          echo "Dispatched live sync event for ${GITHUB_REPOSITORY}@${GITHUB_SHA}"

@@ -1,0 +1,27 @@
+{
+  "challenge_module": "PalomarChallenge",
+  "solution_module": "PalomarSolution",
+  "theorem_names": [
+    "PVsNP.Palomar.prove_p_subset_np",
+    "PVsNP.Palomar.prove_baker_gill_solovay",
+    "PVsNP.Palomar.prove_natural_proof_breaks_prf",
+    "PVsNP.Palomar.prove_hybrid_telescoping",
+    "PVsNP.Palomar.prove_natural_proof_nonvacuous",
+    "PVsNP.Palomar.prove_odd_cycle_contextual",
+    "PVsNP.Palomar.prove_mermin_peres_contextual",
+    "PVsNP.Palomar.prove_tractable_polymorphisms",
+    "PVsNP.Palomar.prove_monotone_3sat_rigid",
+    "PVsNP.Palomar.prove_markov_inverter_tight",
+    "PVsNP.Palomar.prove_fischer_reduction",
+    "PVsNP.Palomar.prove_multiplicative_complexity",
+    "PVsNP.Palomar.prove_perm_det_char2",
+    "PVsNP.Palomar.prove_catalytic_algebra",
+    "PVsNP.Palomar.prove_all_frontier_theorems"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

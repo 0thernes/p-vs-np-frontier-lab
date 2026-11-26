@@ -1,0 +1,44 @@
+# SPDX-License-Identifier: Apache-2.0
+name: Release Artifacts, SHA256SUMS & SLSA Attestation
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  id-token: write
+  attestations: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Collect release artifacts and generate SHA256SUMS
+        run: |
+          mkdir -p release-dist
+          cp dist/Donahue_2026_p_vs_np_barrier_anatomy.pdf release-dist/
+          cp dist/arxiv_submission.tar.gz release-dist/
+          cp MANIFEST.sha256 release-dist/
+          cp CITATION.cff release-dist/
+          cp results/lean_axioms.txt release-dist/
+          (cd release-dist && sha256sum * > SHA256SUMS)
+          cat release-dist/SHA256SUMS
+      - name: Generate Sigstore SLSA build provenance attestations
+        uses: actions/attest-build-provenance@v2
+        with:
+          subject-path: release-dist/*
+      - name: Publish GitHub Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="${GITHUB_REF_NAME}"
+          gh release create "$TAG" release-dist/* \
+            --title "p-vs-np-frontier-lab $TAG" \
+            --notes "Machine-checked Lean 4.35.0 barrier anatomy (14 theorems C1-C14, 6 independent kernels), 15-page AMS-LaTeX white paper, arXiv source tarball, SHA256SUMS, and Sigstore SLSA provenance attestations. P vs. NP remains completely open." \
+            || gh release upload "$TAG" release-dist/* --clobber

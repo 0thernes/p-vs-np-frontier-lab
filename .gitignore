@@ -29,3 +29,8 @@ paper/build/
 Thumbs.db
 *.swp
 .env
+release-dist/
+.mypy_cache/
+.ruff_cache/
+.hypothesis/
+SHA256SUMS
