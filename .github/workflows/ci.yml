@@ -76,7 +76,7 @@ jobs:
         run: |
           $ErrorActionPreference = 'Stop'
           Invoke-WebRequest -Uri "https://raw.githubusercontent.com/leanprover/elan/master/elan-init.ps1" -OutFile "$env:TEMP\elan-init.ps1"
-          & "$env:TEMP\elan-init.ps1" -y --default-toolchain none
+          & "$env:TEMP\elan-init.ps1" -NoPrompt $true -DefaultToolchain "none"
           & "$env:USERPROFILE\.elan\bin\elan.exe" toolchain install leanprover/lean4:v4.35.0
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           $cad = Join-Path $env:USERPROFILE ".elan\toolchains\leanprover--lean4---v4.35.0\bin\cadical.exe"
