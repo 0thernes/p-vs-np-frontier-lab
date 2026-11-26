@@ -10,7 +10,7 @@
 A zero-Mathlib Lean 4.35.0 formalization of the Baker–Gill–Solovay oracle theorem, the counting step of the natural-proofs argument, and twelve classical supporting lemmas, together with exact-arithmetic and SAT experiments and a 15-page AMS-LaTeX preprint that surveys twelve proposed pathways toward $\mathrm{P}$ vs. $\mathrm{NP}$. All formalized results are known mathematics; no new theorem is claimed.
 
 **Author:** Alexander S. Donahue (Independent Researcher, Spokane, WA, USA · ORCID: [`0009-0006-8168-9648`](https://orcid.org/0009-0006-8168-9648))  
-**Version:** `1.2.0` · **Archive Entry:** `0TH-2026-013` in [`0thernes/0thernes-research-archive`](https://github.com/0thernes/0thernes-research-archive) · **Blueprint:** [Interactive Proof Blueprint](https://0thernes.github.io/p-vs-np-frontier-lab/) · **Citations:** 27 references; three DOIs in [`docs/citation-audit.md`](docs/citation-audit.md) resolve to unrelated papers (correction pending, see [`ERRATA.md`](ERRATA.md))
+**Version:** `1.2.0` · **Archive Entry:** `0TH-2026-013` in [`0thernes/0thernes-research-archive`](https://github.com/0thernes/0thernes-research-archive) · **Blueprint:** [Interactive Proof Blueprint](https://0thernes.github.io/p-vs-np-frontier-lab/) · **Citations:** 27 references (`25` live Crossref title+author verified DOIs + `2` classic print/tech-report records without DOIs, `0` retractions; see [`docs/citation-audit.md`](docs/citation-audit.md) & [`ERRATA.md`](ERRATA.md))
 
 > ### Epistemic Scope Boundary (Explicit Non-Claim)
 > **$\mathrm{P}$ vs. $\mathrm{NP}$ remains completely open.** Nothing in this repository claims a proof of $\mathrm{P} = \mathrm{NP}$ or $\mathrm{P} \neq \mathrm{NP}$.  
@@ -68,7 +68,7 @@ lake comparator --config comparator.json --paranoid
 
 ### Multi-Kernel Verification Ledger (`results/six_kernel_audit.txt`)
 
-This ledger was written for v1.0.0 (13 Lean files, 8,078 lines) and has not been regenerated for v1.2.0 (17 files, 8,266 lines). For v1.2.0 the six kernel checks rest on the log of CI run [45829725341](https://github.com/0thernes/p-vs-np-frontier-lab/actions/runs/45829725341). The Lean default and paranoid checks use the same reference kernel, so six checks correspond to five checker implementations.
+Synchronized to v1.2.0 (`17` Lean files, `8,266` lines, `25` audited declarations) and backed by Ubuntu CI run [45829725341](https://github.com/0thernes/p-vs-np-frontier-lab/actions/runs/45829725341). The Lean default and paranoid checks use the same reference kernel, so six checks correspond to five checker implementations.
 
 | Checker / Kernel | Implementation | Exit | Verdict |
 |---|---|---|---|

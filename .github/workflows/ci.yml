@@ -47,13 +47,14 @@ jobs:
           import PVsNP.CircuitPhaseTransition
           theorem false_perm_eq_det_mod3 : PVsNP.permInt 2 (PVsNP.witnessMat 2) % 3 = PVsNP.detInt 2 (PVsNP.witnessMat 2) % 3 := by decide
           EOF
-          if lake env lean _AdversarialFalseCheck.lean; then
-            echo "ERROR: Lean kernel failed to reject false theorem!" >&2
-            rm -f _AdversarialFalseCheck.lean
+          if lake env lean _AdversarialFalseCheck.lean >/tmp/neg_elab.log 2>&1; then
+            echo "ERROR: Lean elaboration failed to reject false theorem!" >&2
+            rm -f _AdversarialFalseCheck.lean /tmp/neg_elab.log
             exit 1
           fi
-          rm -f _AdversarialFalseCheck.lean
-          echo "PASS: Live negative Lean kernel rejection confirmed."
+          grep -qE "tactic 'decide' failed|evaluated to|type mismatch" /tmp/neg_elab.log
+          rm -f _AdversarialFalseCheck.lean /tmp/neg_elab.log
+          echo "PASS: Negative elaboration test rejected false theorem with expected decide error."
           lake env leanchecker --fresh Solution
           lake env leanchecker-paranoid --fresh Solution
           lake check --paranoid

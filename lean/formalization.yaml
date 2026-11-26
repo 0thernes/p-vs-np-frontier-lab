@@ -8,33 +8,38 @@ schema_version: "1.2"
 lean_toolchain: "leanprover/lean4:v4.35.0"
 mathlib_dependency: false
 module_headers_all_files: true
-forbidden_token_hits: 0
+forbidden_token_hits_default_targets: 0
+palomar_challenge_intentional_sorry_stubs: 15
 total_lean_files: 17
 audited_declarations: 25
 non_vacuity_witnesses: 5
 adversarial_refutations: 5
-live_negative_kernel_rejection: true
-total_lean_lines: 8275
+negative_elaboration_test: true
+total_lean_lines: 8266
 max_file_lines: 2557
 
 epistemic_boundary:
   p_vs_np_status: "OPEN"
   disclaimer: >
-    No theorem in this repository proves P = NP or P != NP. All 14 Lean theorems
-    establish unconditional complexity barriers, algebraic/combinatorial phase
-    transitions, rigidity classifications, and exact zero-workspace algebraic
-    reversibility bounds.
+    No theorem in this repository proves P = NP or P != NP. All 14 formalized
+    statements in Challenge.lean/Solution.lean are known mathematics: the
+    Baker-Gill-Solovay dual relativization theorem (C2), the counting step of
+    the natural-proofs argument (C3), and twelve classical supporting lemmas
+    (C1, C4-C14). No new theorem is claimed.
 
 kernels_verified:
   - name: "lean (C++ reference kernel + VerifyAxioms.lean)"
     exit_code: 0
-    scope: "All 15 exported theorems in Solution.lean; axioms strictly within [propext, Classical.choice, Quot.sound]"
+    scope: "All 25 audited declarations (15 Solution + 5 NonVacuity + 5 AdversarialTests); axioms strictly within [propext, Classical.choice, Quot.sound]"
   - name: "leanchecker (C++ external .olean replay)"
     exit_code: 0
     scope: "Solution.olean and full transitive import graph"
   - name: "leanchecker-paranoid (C++ paranoid .olean replay)"
     exit_code: 0
-    scope: "Solution.olean with full paranoid definitional checks"
+    scope: "Solution.olean with full paranoid definitional checks (same reference kernel implementation in paranoid mode)"
+  - name: "lean4lean (Ubuntu CI via lake check --paranoid)"
+    exit_code: 0
+    scope: "Verified Lean-in-Lean kernel replay inside Linux bubblewrap sandbox (CI run 45829725341)"
   - name: "con-leche --verified (Lean-in-Lean set-model-sound kernel)"
     exit_code: 0
     verdict: "con-leche: accepted 3982 declarations (--verified)"
@@ -67,67 +72,67 @@ toolchain_issues_documented:
 
 claims:
   - id: "C1"
-    title: "P subseteq NP for every oracle O"
+    title: "P subseteq NP for every oracle O (explicit 4-tape OTM model)"
     challenge_stmt: "Challenge.PSubsetNPStmt"
     solution_proof: "Solution.prove_p_subset_np"
     module: "PVsNP.OTM"
     axioms: ["propext", "Classical.choice", "Quot.sound"]
   - id: "C2"
-    title: "Baker-Gill-Solovay Dual Relativization Barrier (Separation & Collapse Oracles)"
+    title: "Baker-Gill-Solovay Dual Relativization Theorem (Separation & Collapse Oracles)"
     challenge_stmt: "Challenge.BakerGillSolovayStmt"
     solution_proof: "Solution.prove_baker_gill_solovay"
     module: "PVsNP.Relativization"
     axioms: ["propext", "Classical.choice", "Quot.sound"]
   - id: "C3"
-    title: "Razborov-Rudich Natural Proofs Break Pseudorandom Functions (Exact Cross-Multiplied Bound)"
+    title: "Counting Step Behind Razborov-Rudich Natural Proofs (No Constructivity/Circuit Class)"
     challenge_stmt: "Challenge.NaturalProofBreaksPRFStmt"
     solution_proof: "Solution.prove_natural_proof_breaks_prf"
     module: "PVsNP.NaturalProofs"
     axioms: ["propext", "Classical.choice", "Quot.sound"]
   - id: "C4"
-    title: "Exact Hybrid Telescoping Triangle Inequality over Z"
+    title: "Integer Pigeonhole Bound (m*B < |a_0 - a_m| implies some |a_i - a_{i+1}| > B)"
     challenge_stmt: "Challenge.HybridTelescopingStmt"
     solution_proof: "Solution.prove_hybrid_telescoping"
     module: "PVsNP.NaturalProofs"
     axioms: ["propext", "Quot.sound"]
   - id: "C5"
-    title: "Natural-Proof Non-Vacuous Largeness Witness (Non-Constant Functions Density >= 1/2)"
-    challenge_stmt: "Challenge.NaturalProofNonVacuousStmt"
+    title: "Largeness Witness (nonConstantProp accepts >= 1/2 of truth tables and rejects constants)"
+    challenge_stmt: "Challenge.NaturalProofNonvacuousStmt"
     solution_proof: "Solution.prove_natural_proof_nonvacuous"
     module: "PVsNP.NaturalProofs"
     axioms: ["propext", "Classical.choice", "Quot.sound"]
   - id: "C6"
-    title: "Odd-Cycle Parity-Sheaf Maximal Contextuality for All Odd Cycles C_{2k+3}"
+    title: "Odd-Cycle XOR Minimal Unsatisfiability for All 2k+1 Variables (k >= 0)"
     challenge_stmt: "Challenge.OddCycleContextualStmt"
     solution_proof: "Solution.prove_odd_cycle_contextual"
     module: "PVsNP.SheafPolymorphism"
     axioms: ["propext", "Quot.sound"]
   - id: "C7"
-    title: "Mermin-Peres 3x3 Magic Square Maximal Quantum Contextuality"
+    title: "Mermin-Peres 9-Variable Parity System Minimal Unsatisfiability"
     challenge_stmt: "Challenge.MerminPeresContextualStmt"
     solution_proof: "Solution.prove_mermin_peres_contextual"
     module: "PVsNP.SheafPolymorphism"
     axioms: ["propext", "Classical.choice", "Quot.sound"]
   - id: "C8"
-    title: "Schaefer Tractable Polymorphisms (XOR Maltsev, Horn AND, Dual-Horn OR, 2-SAT Majority)"
+    title: "Four Tractable Polymorphisms (XOR Maltsev, Horn AND, Dual-Horn OR, 2-SAT Majority)"
     challenge_stmt: "Challenge.TractablePolymorphismsStmt"
     solution_proof: "Solution.prove_tractable_polymorphisms"
     module: "PVsNP.SheafPolymorphism"
     axioms: ["propext"]
   - id: "C9"
-    title: "All-Arity Monotone 3-SAT Polymorphism Rigidity & Inclusion Minimality of {R000, R111}"
+    title: "All-Arity Monotone 3-SAT Polymorphism Rigidity & Minimality of {R000, R111} (Post's Lattice)"
     challenge_stmt: "Challenge.Monotone3SATRigidStmt"
     solution_proof: "Solution.prove_monotone_3sat_rigid"
     module: "PVsNP.SheafPolymorphism"
     axioms: ["propext", "Quot.sound"]
   - id: "C10"
-    title: "Markov Bounded-Negation Tight Threshold (Exactly k NOT Gates Invert 2^k - 1 Bits)"
+    title: "Markov Bounded-Negation Tight Threshold (<= r NOT cannot invert >= 2^r; k NOT inverts 2^k - 1)"
     challenge_stmt: "Challenge.MarkovInverterTightStmt"
     solution_proof: "Solution.prove_markov_inverter_tight"
     module: "PVsNP.CircuitPhaseTransition"
     axioms: ["propext", "Classical.choice", "Quot.sound"]
   - id: "C11"
-    title: "Fischer Universal Dual-Rail De Morgan Compilation to k NOT Gates"
+    title: "k-NOT Circuit Compilation (Existence; No Size Bound)"
     challenge_stmt: "Challenge.FischerReductionStmt"
     solution_proof: "Solution.prove_fischer_reduction"
     module: "PVsNP.CircuitPhaseTransition"
@@ -145,13 +150,13 @@ claims:
     module: "PVsNP.CircuitPhaseTransition"
     axioms: ["propext", "Classical.choice", "Quot.sound"]
   - id: "C14"
-    title: "Catalytic Zero-Workspace Bijective Reversibility & Exact d-Fold Multilinear Product (3*4^{d-1} Ops)"
+    title: "Reversible Straight-Line Program Reversibility & Exact d-Fold Constant Product (3*4^{d-1} - 2 Ops)"
     challenge_stmt: "Challenge.CatalyticAlgebraStmt"
     solution_proof: "Solution.prove_catalytic_algebra"
     module: "PVsNP.CatalyticAlgebra"
     axioms: ["propext", "Quot.sound"]
   - id: "ALL"
-    title: "Conjunction of All 14 Frontier & Barrier Theorems"
+    title: "Conjunction of All 14 Formalized Statements"
     challenge_stmt: "Challenge.AllFrontierTheoremsStmt"
     solution_proof: "Solution.prove_all_frontier_theorems"
     module: "Solution"

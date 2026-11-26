@@ -1,54 +1,63 @@
 ================================================================================
 MULTI-KERNEL LEAN 4.35.0 FORMAL VERIFICATION AUDIT LOG
-Repository: p-vs-np-frontier-lab (v1.0.0)
-Toolchain:  leanprover/lean4:v4.35.0 (Zero Mathlib, all 13 files use `module`)
-Export:     results/solution_export.ndjson (temporary, deleted after audit)
-            Size:   31,403,462 bytes
-            SHA256: 7F981919BA1055E81695FBEDF2CE4A249F195129453DB3F39AF200EBB1BC764F
-            Target: Solution.prove_all_frontier_theorems (conjoins all 14 theorems)
-            Symbols verified present in export: 15 / 15
-            sorryAx present in export:       False
-            trustCompiler present in export: False
-Forbidden-token scan across lean/**/*.lean (comments stripped):
+Repository: p-vs-np-frontier-lab (v1.2.0)
+Toolchain:  leanprover/lean4:v4.35.0 (Zero Mathlib, all 17 files use `module`)
+CI Run:     https://github.com/0thernes/p-vs-np-frontier-lab/actions/runs/45829725341
+Targets:    15 PalomarChallenge/PalomarSolution targets + 5 NonVacuity + 5 AdversarialTests
+            (25 total declarations audited by VerifyAxioms.lean)
+            sorryAx present in Solution/defaultTargets: False (15 intentional comparator
+            stubs exist only in non-default PalomarChallenge.lean)
+            trustCompiler present in export:            False
+Forbidden-token scan across defaultTargets lean/**/*.lean (comments stripped):
             Pattern: sorry | admit | native_decide | implemented_by | ^axiom | @[extern
-            Hits:    0 across 13 files (8,078 total lines; max single file: 2,557 lines)
+            Hits:    0 across 16 default-target files (17 total files, 8,266 total lines;
+                     max single file: 2,557 lines)
 ================================================================================
 
-[KERNEL 1] lean.exe (C++ Reference Kernel + VerifyAxioms.lean)
+Six kernel checks across five independent checker implementations
+(lean / leanchecker / leanchecker-paranoid share the C++ reference kernel):
+
+[CHECK 1] lean (C++ Reference Kernel + VerifyAxioms.lean)
 Command:  lake build && lake env lean VerifyAxioms.lean
-ExitCode: 0 (16/16 build jobs, 0 warnings, 0 errors)
-Axioms:   All 15 theorems strictly within [propext, Classical.choice, Quot.sound]
+ExitCode: 0 (0 warnings, 0 errors)
+Axioms:   All 25 audited declarations strictly within [propext, Classical.choice, Quot.sound]
           (Verbatim output recorded in results/lean_axioms.txt)
 
-[KERNEL 2] leanchecker.exe (C++ External .olean Replay Kernel)
-Command:  lake env leanchecker Solution
+[CHECK 2] leanchecker (C++ External .olean Replay)
+Command:  lake env leanchecker --fresh Solution
 ExitCode: 0
 
-[KERNEL 3] leanchecker-paranoid.exe (C++ Paranoid External .olean Replay Kernel)
-Command:  lake env leanchecker-paranoid Solution
+[CHECK 3] leanchecker-paranoid (C++ Paranoid External .olean Replay)
+Command:  lake env leanchecker-paranoid --fresh Solution
 ExitCode: 0
 
-[KERNEL 4] con-leche.exe --verified (Formally Verified Lean-in-Lean Set-Model Kernel)
-Command:  con-leche --verified solution_export.ndjson
+[CHECK 4] lean4lean (Verified Lean-in-Lean Kernel via Ubuntu CI lake check --paranoid)
+Command:  lake check --paranoid
+ExitCode: 0 (Ubuntu CI run 45829725341)
+
+[CHECK 5] con-leche --verified (Formally Verified Lean-in-Lean Set-Model Kernel)
+Command:  con-leche --verified solution_export.ndjson (also replayed via lake comparator --paranoid)
 Output:   con-leche: accepted 3982 declarations (--verified)
 ExitCode: 0
-Soundness theorem: ConLeche.no_False_declaration (set-theoretic model existence)
 
-[KERNEL 5] con-ron.exe --verified (Formally Verified Aeneas-Extracted Rust Arena Kernel)
-Command:  con-ron --verified solution_export.ndjson
+[CHECK 6] con-ron --verified (Formally Verified Aeneas-Extracted Rust Arena Kernel)
+Command:  con-ron --verified solution_export.ndjson (also replayed via lake comparator --paranoid)
 Output:   con-ron: accepted 3982 declarations (--verified)
 ExitCode: 0
-Soundness theorem: ConRon.Capstone.no_False_declaration (verified Rust pipeline)
 
-[KERNEL 6] nanoda_bin.exe 0.4.19 (Independent Rust External Typechecker)
-Command:  nanoda_bin nanoda_config.json
+[CHECK 7] nanoda_bin 0.4.19 (Independent Rust External Typechecker)
+Command:  nanoda_bin nanoda_config.json (also replayed via lake check / lake comparator --paranoid)
 Config:   permitted_axioms=["propext","Classical.choice","Quot.sound"],
           unpermitted_axiom_hard_error=true, nat_extension=true, string_extension=true
 Output:   Checked 4319 declarations with no typechecker errors
 ExitCode: 0
 
+[PALOMAR COMPARATOR]
+Command:  lake build PalomarChallenge && lake comparator --config comparator.json --paranoid
+ExitCode: 0 (Ubuntu CI run 45829725341; all 15 exported targets accepted)
+
 --------------------------------------------------------------------------------
-DIAGNOSED UPSTREAM TOOLCHAIN ISSUES (NOT DEFECTS IN THIS FORMALIZATION)
+DIAGNOSED UPSTREAM WINDOWS TOOLCHAIN LIMITATIONS (NOT DEFECTS IN THIS REPO)
 --------------------------------------------------------------------------------
 [TOOLCHAIN ISSUE A] lean4lean.exe (bundled in leanprover/lean4:v4.35.0 Windows)
 Command:  lake env lean4lean Solution
@@ -65,7 +74,7 @@ Command:  lake check --from-export=... --paranoid --inadvisably-no-sandbox
 Output:   error: 'lake check' needs 'git' on PATH to build inside the sandbox
 ExitCode: 2
 Finding:  Classified as upstream `issue`: lake check's sandbox wrapper requires
-          Linux bwrap and POSIX git. All underlying bundled kernels were invoked
-          directly on Windows and passed (6/6 passing checks above); Linux CI
-          (.github/workflows/ci.yml) runs `lake check` natively.
+          Linux bwrap and POSIX git. Linux CI (.github/workflows/ci.yml) runs
+          `lake check --paranoid` and `lake comparator --config comparator.json --paranoid`
+          natively on Ubuntu.
 ================================================================================

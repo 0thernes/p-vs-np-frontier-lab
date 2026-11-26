@@ -441,3 +441,54 @@ def test_property_char2_perm_det_and_catalytic_reversibility() -> None:
             assert (dst + x1 * b) != dst0 + x0 * x1 * r0
 
     check_catalytic_2reg_exact()
+
+
+def test_citation_verifier_rejects_wrong_article_doi() -> None:
+    """Negative test: Crossref HTTP-200 DOI pointing to an unrelated paper MUST be rejected."""
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location("check_citations", ROOT / "scripts" / "check_citations.py")
+    assert spec is not None and spec.loader is not None
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+
+    # Known mismatched Crossref payload (old BoyarPeralta2008 wrong DOI 10.1016/j.tcs.2008.01.021)
+    wrong_msg = {
+        "title": ["Parametric lambda-theories"],
+        "author": [{"family": "Paolini"}],
+    }
+    ok, reason = mod.verify_crossref_match(
+        "Tight bounds for the multiplicative complexity of symmetric functions",
+        "Boyar",
+        wrong_msg,
+    )
+    assert not ok and "TITLE MISMATCH" in reason
+
+    # Matching payload must pass
+    good_msg = {
+        "title": ["Tight bounds for the multiplicative complexity of symmetric functions"],
+        "author": [{"family": "Boyar"}, {"family": "Peralta"}],
+    }
+    ok_good, _ = mod.verify_crossref_match(
+        "Tight bounds for the multiplicative complexity of symmetric functions",
+        "Boyar",
+        good_msg,
+    )
+    assert ok_good
+
+    # Blank Crossref title (Mignon & Ressayre 2004 IMRN) passes iff author matches
+    blank_good = {"title": [""], "author": [{"family": "Mignon"}, {"family": "Ressayre"}]}
+    ok_blank, _ = mod.verify_crossref_match(
+        "A quadratic bound for the determinant and permanent problem",
+        "Mignon",
+        blank_good,
+    )
+    assert ok_blank
+    blank_bad = {"title": [""], "author": [{"family": "Unrelated"}]}
+    ok_blank_bad, _ = mod.verify_crossref_match(
+        "A quadratic bound for the determinant and permanent problem",
+        "Mignon",
+        blank_bad,
+    )
+    assert not ok_blank_bad
+
