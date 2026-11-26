@@ -34,3 +34,4 @@ release-dist/
 .ruff_cache/
 .hypothesis/
 SHA256SUMS
+build/
