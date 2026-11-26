@@ -4,7 +4,7 @@
 - **Project:** `p-vs-np-frontier-lab` — Machine-Checked Barrier Anatomy and Twelve Divergent Pathways Toward P vs. NP (`v1.1.0`)
 - **Repository:** `https://github.com/0thernes/p-vs-np-frontier-lab` · **Master Archive:** `0thernes/0thernes-research-archive` (`0TH-2026-013`)
 - **Author:** Alexander S. Donahue (`Independent Researcher, Spokane, WA, USA`, ORCID `0009-0006-8168-9648`, `0_0@0thernes.art`). Never assert an unformed LLC entity.
-- **Epistemic Status of P vs NP:** **COMPLETELY OPEN.** This repository proves **neither** `P = NP` **nor** `P != NP`. All 14 Lean 4.35.0 theorems (`C1`–`C14`) establish unconditional complexity barriers, polymorphism rigidity, circuit phase transitions, and zero-workspace catalytic algebra.
+- **Epistemic Status of P vs NP:** **COMPLETELY OPEN.** This repository proves **neither** `P = NP` **nor** `P != NP`. The 14 Lean 4.35.0 statements `C1`–`C14` are known mathematics: the Baker–Gill–Solovay theorem, the counting step of natural proofs, and 12 classical supporting lemmas. Only `C2` is a barrier theorem in full; no new theorem is claimed (see `CLAIMS.md`).
 
 ## Hard Rules (`R1`–`R8`)
 

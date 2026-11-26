@@ -6,6 +6,9 @@ Format follows Keep a Changelog and Semantic Versioning (`VERSION`).
 
 ## [Unreleased]
 
+### Changed
+- **Correction note (2026-11-26):** Claim wording was corrected to match the statement audit; see `CLAIMS.md` and `ERRATA.md`. The entries below keep the wording used at the time. In particular, `C1`–`C14` are 14 known statements (the Baker–Gill–Solovay theorem, the counting step of natural proofs, and 12 classical supporting lemmas), not 14 unconditional barrier theorems; three DOIs in `docs/citation-audit.md` resolve to unrelated papers, so "27/27 verified" does not hold; and the negative CI test is rejected during elaboration, not by the kernel.
+
 ## [1.2.0] - 2026-11-26
 
 ### Added
