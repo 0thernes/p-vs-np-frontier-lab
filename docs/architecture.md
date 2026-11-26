@@ -32,10 +32,10 @@
   - `PVsNP.RelativizationSep` — stagewise diagonalization oracle $B$ (`bgs_oracle_separation`).
   - `PVsNP.RelativizationCol` — canonical bounded-halting collapse oracle $A$ (`bgs_oracle_collapse`).
   - `PVsNP.Relativization` — unified `baker_gill_solovay` (`C2`).
-- `PVsNP.NaturalProofs` — exact cross-multiplied $\mathbb{Z}$ PRF breaker (`C3`), hybrid telescoping (`C4`), `nonConstantProp` largeness witness (`C5`).
-- `PVsNP.SheafPolymorphism` — odd cycles $C_{2k+3}$ (`C6`), Mermin–Peres (`C7`), Schaefer polymorphisms (`C8`), all-arity monotone 3-SAT inclusion-minimal rigidity via finite principal ultrafilters (`C9`).
-- `PVsNP.CircuitPhaseTransition` — Markov $k$-NOT lower/upper bounds (`C10`), Fischer dual-rail De Morgan compiler (`C11`), multiplicative complexity subset-product degree bound (`C12`), char-2 permanent/determinant collapse + $W_n = \mathrm{diag}(I_{n-2}, J_2)$ universal $p \ge 3$ witness (`C13`).
-- `PVsNP.CatalyticAlgebra` — Landauer bijective `invertProg` + arbitrary-degree $d$-fold zero-workspace catalytic multilinear product restoring all $d$ arbitrary catalysts in $3\cdot 4^{d-1}$ ops (`C14`).
+- `PVsNP.NaturalProofs` — counting step of the natural-proofs argument with an exact integer bound (`C3`), integer pigeonhole telescoping bound (`C4`), `nonConstantProp` largeness witness (`C5`).
+- `PVsNP.SheafPolymorphism` — minimal unsatisfiability of odd-cycle XOR systems on $2k+1$ variables (`C6`) and of the Mermin–Peres system (`C7`), four polymorphism preservation facts (`C8`), all-arity projection-only rigidity of $\{R_{000}, R_{111}\}$ via finite principal ultrafilters (`C9`).
+- `PVsNP.CircuitPhaseTransition` — Markov $k$-NOT lower bound and upper bound for $n = 2^k - 1$ (`C10`), dual-rail k-NOT compilation without size bound (`C11`), multiplicative complexity subset-product degree bound (`C12`), char-2 permanent/determinant collapse + $W_n = \mathrm{diag}(I_{n-2}, J_2)$ universal $p \ge 3$ witness (`C13`).
+- `PVsNP.CatalyticAlgebra` — `invertProg` undoes well-formed straight-line register programs, and a recursive program of $3\cdot 4^{d-1} - 2$ instructions adds a product of program constants while restoring all other registers (`C14`).
 - `Challenge` / `Solution` / `VerifyAxioms` — public specification-vs-proof interface and axiom audit.
 
 ## 3. Architectural Decision Records

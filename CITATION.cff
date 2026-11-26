@@ -25,14 +25,17 @@ keywords:
   - formal verification
   - relativization
   - natural proofs
-  - polymorphism rigidity
-  - sheaf contextuality
+  - Boolean polymorphisms
+  - minimal unsatisfiability
   - multiplicative complexity
-  - catalytic computation
+  - reversible register programs
 abstract: >-
-  A zero-Mathlib Lean 4.35.0 formalization (14 unconditional barrier, rigidity,
-  phase-transition, and catalytic theorems verified across six independent kernels
-  via lake check --paranoid and lake comparator --paranoid), exact-arithmetic and
-  SAT-certified falsification bench, and 15-page AMS-LaTeX white paper auditing
-  classical complexity barriers and twelve divergent pathways toward P vs. NP.
-  P vs. NP remains completely open; no proof of P = NP or P != NP is claimed.
+  A zero-Mathlib Lean 4.35.0 formalization of the Baker-Gill-Solovay oracle
+  theorem in an explicit oracle Turing machine model, the counting step of the
+  natural-proofs argument, and twelve classical supporting lemmas (14 statements
+  C1-C14, accepted by six kernel checks with five checker implementations on
+  Ubuntu CI). It also contains exact-arithmetic and SAT experiments, including
+  three exact counterexamples and one numerical illustration against four
+  illustrative SAT heuristics, and a 15-page white paper surveying twelve proposed
+  pathways toward P vs. NP. All formalized results are known mathematics. P vs. NP
+  remains open; no proof of P = NP or P != NP is claimed.
