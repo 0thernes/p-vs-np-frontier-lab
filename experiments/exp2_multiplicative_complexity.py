@@ -11,7 +11,6 @@ Zero floating-point arithmetic is used in any algebraic invariant or verificatio
 
 from __future__ import annotations
 
-import itertools
 import json
 import os
 import shutil
@@ -403,7 +402,6 @@ def make_sym_tt(n: int, predicate) -> list[int]:
 
 def make_clique_4_3_tt() -> list[int]:
     """K_3 triangle indicator in 4-vertex graphs (n=6 edges: 01,02,03,12,13,23)."""
-    edges = [(0, 1), (0, 2), (0, 3), (1, 2), (1, 3), (2, 3)]
     tris = [(0, 1, 3), (0, 2, 4), (1, 2, 5), (3, 4, 5)]
     tt = []
     for u in range(1 << 6):

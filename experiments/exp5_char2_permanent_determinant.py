@@ -104,11 +104,11 @@ def mignon_ressayre_hessian_rank(n: int) -> dict:
     N2 = n * n
     H: list[list[Fraction]] = [[Fraction(0) for _ in range(N2)] for _ in range(N2)]
     for idx1, (i, j) in enumerate(coords):
-        for idx2, (k, l) in enumerate(coords):
-            if i == k or j == l:
+        for idx2, (k, col_l) in enumerate(coords):
+            if i == k or j == col_l:
                 continue
             sub = [
-                [A0[r][c] for c in range(n) if c != j and c != l]
+                [A0[r][c] for c in range(n) if c != j and c != col_l]
                 for r in range(n) if r != i and r != k
             ]
             val = 1 if len(sub) == 0 else exact_perm(sub)

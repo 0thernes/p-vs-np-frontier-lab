@@ -6,6 +6,19 @@ Format follows Keep a Changelog and Semantic Versioning (`VERSION`).
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-11-26
+
+### Added
+- **Concrete Non-Vacuity & Adversarial Sharpness Modules (`lean/PVsNP/NonVacuity.lean`, `lean/PVsNP/AdversarialTests.lean`):** Added 5 concrete non-vacuity witnesses (`nv_odd_cycle_k0_contextual`, `nv_mermin_peres_contextual`, `nv_witness_mat_n2`, `nv_natural_proof_n1`, `nv_catalytic_d2_concrete`) and 5 negative boundary sharpness refutations (2 strictly zero-axiom `adv_const_true_not_projection` / `adv_const_false_not_projection`, plus `adv_markov_1not_cannot_invert_2bits`, `adv_mc_and3_not_one_gate`, `adv_perm_ne_det_mod3_n2`), expanding `VerifyAxioms.lean` from 15 to **25 audited declarations** strictly within `[propext, Classical.choice, Quot.sound]`.
+- **Live Negative Lean Kernel Rejection Gate (`.github/workflows/ci.yml`):** Ubuntu 6-kernel CI now compiles a temporary false claim (`permInt 2 (witnessMat 2) % 3 = detInt 2 (witnessMat 2) % 3`) and requires Lean 4.35.0 to reject it with non-zero exit code.
+- **Live Crossref Citation & Retraction Auditor (`scripts/check_citations.py`, `docs/citation-audit.md`):** Independently verified **27/27** bibliography entries in `paper/main.tex` (**25 live Crossref HTTP-200 DOIs + 2 archival print records, 0 retractions**).
+- **DigiCert RFC 3161 TSA Cryptographic Timestamp (`data/MANIFEST.sha256.tsr`):** Sealed `data/MANIFEST.sha256` against DigiCert's public RFC 3161 Time-Stamping Authority.
+- **Interactive Searchable WCAG 2.2 AA Blueprint DAG (`scripts/build_blueprint.py`):** Added live keyword filter, SVG module click-to-highlight dependency cone, `NonVacuity` & `AdversarialTests` tables, and `prefers-reduced-motion`.
+- **3-Cycle Gold-Standard Hardening Dossier (`docs/reviews/2026-11-26-3cycle-hardening-v1.2.0.md`).**
+
+### Fixed
+- **Zero Static-Analysis Warnings (`ruff=0`, `mypy=0`):** Eliminated all 14 `ruff` findings across `experiments/exp1..exp5` and `tests/test_all.py`, added `pythonpath = .` to `pytest.ini`, and fixed the 2 `mypy` variable-shadowing errors in `tests/test_all.py`.
+
 ## [1.1.0] - 2026-11-25
 
 ### Added

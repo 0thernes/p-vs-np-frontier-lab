@@ -36,12 +36,24 @@ jobs:
           lake build PalomarChallenge
           lake env lean VerifyAxioms.lean | tee /tmp/lean_axioms.txt
           COUNT=$(grep -cE "depends on axioms:|does not depend on any axioms" /tmp/lean_axioms.txt)
-          echo "Audited theorem count: $COUNT"
-          test "$COUNT" -eq 15
+          echo "Audited declaration count: $COUNT"
+          test "$COUNT" -eq 25
           if grep -E "sorryAx|ofReduceBool|trustCompiler|_native" /tmp/lean_axioms.txt; then
             echo "FORBIDDEN AXIOM DETECTED" >&2
             exit 1
           fi
+          cat <<'EOF' > _AdversarialFalseCheck.lean
+          module
+          import PVsNP.CircuitPhaseTransition
+          theorem false_perm_eq_det_mod3 : PVsNP.permInt 2 (PVsNP.witnessMat 2) % 3 = PVsNP.detInt 2 (PVsNP.witnessMat 2) % 3 := by decide
+          EOF
+          if lake env lean _AdversarialFalseCheck.lean; then
+            echo "ERROR: Lean kernel failed to reject false theorem!" >&2
+            rm -f _AdversarialFalseCheck.lean
+            exit 1
+          fi
+          rm -f _AdversarialFalseCheck.lean
+          echo "PASS: Live negative Lean kernel rejection confirmed."
           lake env leanchecker --fresh Solution
           lake env leanchecker-paranoid --fresh Solution
           lake check --paranoid
@@ -91,6 +103,8 @@ jobs:
         run: python -m pytest -v tests/test_all.py
       - name: Run README axiom parity check
         run: python scripts/check_readme_axioms.py
+      - name: Run offline bibliography key parity check
+        run: python scripts/check_citations.py --offline
       - name: Run proof blueprint generator
         run: python scripts/build_blueprint.py
       - name: Verify SHA-256 provenance manifests (all OSes)

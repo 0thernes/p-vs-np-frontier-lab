@@ -384,14 +384,6 @@ def build_pseudo_expander_3reg_tseitin(n: int, seed_step: int = 5) -> tuple[int,
         add_edge(i, (i + 1) % n)
 
     # Deterministic perfect matching of chord endpoints avoiding cycle edges
-    used = [False] * n
-    # Use deterministic greedy stride matching
-    order = [(i * seed_step) % n for i in range(n)]
-    # Ensure permutation if gcd != 1
-    if len(set(order)) != n:
-        order = list(range(n))
-    rem = list(range(n))
-    # Pair using a fixed non-local twist
     half = n // 2
     # Pair i in 0..half-1 with half + ((3*i + 1) % half) if gcd(3, half)==1 else deterministic bijection
     stride = 3

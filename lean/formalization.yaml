@@ -4,13 +4,17 @@
 # lean/Challenge.lean, proof witness in lean/Solution.lean, verbatim #print axioms
 # footprint, and multi-kernel verification status.
 
-schema_version: "1.0"
+schema_version: "1.2"
 lean_toolchain: "leanprover/lean4:v4.35.0"
 mathlib_dependency: false
 module_headers_all_files: true
 forbidden_token_hits: 0
-total_lean_files: 13
-total_lean_lines: 8078
+total_lean_files: 17
+audited_declarations: 25
+non_vacuity_witnesses: 5
+adversarial_refutations: 5
+live_negative_kernel_rejection: true
+total_lean_lines: 8275
 max_file_lines: 2557
 
 epistemic_boundary:

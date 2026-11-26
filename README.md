@@ -10,12 +10,12 @@
 A zero-Mathlib Lean 4.35.0 formalization, exact-arithmetic/SAT falsification laboratory, and 15-page AMS-LaTeX preprint auditing classical complexity-theoretic barriers and twelve divergent pathways toward $\mathrm{P}$ vs. $\mathrm{NP}$.
 
 **Author:** Alexander S. Donahue (Independent Researcher, Spokane, WA, USA · ORCID: [`0009-0006-8168-9648`](https://orcid.org/0009-0006-8168-9648))  
-**Version:** `1.1.0` · **Archive Entry:** `0TH-2026-013` in [`0thernes/0thernes-research-archive`](https://github.com/0thernes/0thernes-research-archive) · **Blueprint:** [Proof Blueprint](https://0thernes.github.io/p-vs-np-frontier-lab/)
+**Version:** `1.2.0` · **Archive Entry:** `0TH-2026-013` in [`0thernes/0thernes-research-archive`](https://github.com/0thernes/0thernes-research-archive) · **Blueprint:** [Interactive Proof Blueprint](https://0thernes.github.io/p-vs-np-frontier-lab/) · **Citations:** [27/27 Live Crossref Verified (0 Retractions)](docs/citation-audit.md)
 
 > ### Epistemic Scope Boundary (Explicit Non-Claim)
 > **$\mathrm{P}$ vs. $\mathrm{NP}$ remains completely open.** Nothing in this repository claims a proof of $\mathrm{P} = \mathrm{NP}$ or $\mathrm{P} \neq \mathrm{NP}$.  
 > This repository delivers:
-> 1. **Tier 1 (Machine-Checked Lean 4.35 Theorems `C1`–`C14`):** 14 unconditional complexity-barrier, algebraic-rigidity, circuit phase-transition, and zero-workspace catalytic theorems (zero Mathlib, `module` headers, `autoImplicit = false`) verified across **all 6 independent kernels** (`lean`, `leanchecker-paranoid`, `lean4lean`, `nanoda`, `con-leche`, `con-ron`) via `lake check --paranoid` and `lake comparator --config comparator.json --paranoid` with zero `sorry`s in all proof modules and zero custom axioms.
+> 1. **Tier 1 (Machine-Checked Lean 4.35 Theorems `C1`–`C14` + 5 `NonVacuity` + 5 `AdversarialTests` = 25 Audited Declarations):** 14 unconditional complexity-barrier, algebraic-rigidity, circuit phase-transition, and zero-workspace catalytic theorems plus 5 concrete non-vacuity witnesses and 5 negative sharpness refutations (zero Mathlib, `module` headers, `autoImplicit = false`) verified across **all 6 independent kernels** (`lean`, `leanchecker-paranoid`, `lean4lean`, `nanoda`, `con-leche`, `con-ron`) via `lake check --paranoid`, `lake comparator --config comparator.json --paranoid`, and a **live negative Lean kernel rejection check** in CI with zero `sorry`s in all proof modules and zero custom axioms.
 > 2. **Tier 2 (Exact-Arithmetic & SAT-Certified Experiments):** 4 exact integer/rational/$\mathbb{F}_2$/CaDiCaL 2.1.2 computational experiments + automated `pytest` verification suite (including an exhaustive brute-force SAT-encoder audit on $n=3$, Hypothesis property tests, and negative/mutant checks).
 > 3. **Tier 3 (Explicitly Tagged `numerical_approximation`):** Adaptive `float64` RK45 ODE benchmark for Attack A (CTDS) contrasting planted SAT convergence against exact UNSAT exponential Lagrange energy blowup.
 > 4. **Tier 4 (Publication-Grade AMS-LaTeX White Paper):** 15-page frozen PDF ([`dist/Donahue_2026_p_vs_np_barrier_anatomy.pdf`](dist/Donahue_2026_p_vs_np_barrier_anatomy.pdf)) and clean-room-tested arXiv source tarball ([`dist/arxiv_submission.tar.gz`](dist/arxiv_submission.tar.gz)).
@@ -36,7 +36,7 @@ lake check --paranoid
 lake comparator --config comparator.json --paranoid
 ```
 
-**Verbatim output (`results/lean_axioms.txt`):**
+**Verbatim output (`results/lean_axioms.txt` — all 25 audited declarations):**
 
 ```text
 'Solution.prove_p_subset_np' depends on axioms: [propext, Classical.choice, Quot.sound]
@@ -54,6 +54,16 @@ lake comparator --config comparator.json --paranoid
 'Solution.prove_perm_det_char2' depends on axioms: [propext, Classical.choice, Quot.sound]
 'Solution.prove_catalytic_algebra' depends on axioms: [propext, Quot.sound]
 'Solution.prove_all_frontier_theorems' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PVsNP.NonVacuity.nv_odd_cycle_k0_contextual' depends on axioms: [propext, Quot.sound]
+'PVsNP.NonVacuity.nv_mermin_peres_contextual' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PVsNP.NonVacuity.nv_witness_mat_n2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PVsNP.NonVacuity.nv_natural_proof_n1' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PVsNP.NonVacuity.nv_catalytic_d2_concrete' depends on axioms: [propext, Quot.sound]
+'PVsNP.AdversarialTests.adv_const_true_not_projection' does not depend on any axioms
+'PVsNP.AdversarialTests.adv_const_false_not_projection' does not depend on any axioms
+'PVsNP.AdversarialTests.adv_markov_1not_cannot_invert_2bits' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PVsNP.AdversarialTests.adv_mc_and3_not_one_gate' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PVsNP.AdversarialTests.adv_perm_ne_det_mod3_n2' depends on axioms: [propext, Classical.choice, Quot.sound]
 ```
 
 ### Multi-Kernel Verification Ledger (`results/six_kernel_audit.txt`)

@@ -1,0 +1,12 @@
+<!-- SPDX-License-Identifier: CC-BY-4.0 -->
+# Three-Cycle Gold-Standard Hardening Audit (`v1.2.0` — 2026-11-26)
+
+**Standards Applied:** Build Standard for LLMs v1.2.0 (`R1`–`R8`, 10 finding classes) + Defensible Independent AI Research Playbook v1.3 (Palomar comparator, non-vacuity, live negative Lean kernel rejection, live Crossref citation audit, DigiCert RFC 3161 TSA timestamping).
+
+| ID | Cycle | Class | Severity | Defect Found | Resolution & Verification |
+|---|---|---|---|---|---|
+| **P-01** | Cycle 1 | `issue` | Medium | `ruff check experiments/ scripts/ tests/` reported 14 lint issues (unused variables `used`, `rem`, `edges`, `clauses`, `spurious_f3_roots`, `n`; unused imports `itertools`, `pytest`, `exp3`; ambiguous loop var `l`; E402 imports). | Removed all dead variables/imports, renamed `l` → `col_l`, added `pythonpath = .` in `pytest.ini`. Verified `ruff=0`. |
+| **P-02** | Cycle 1 | `bug` | Medium | `mypy --ignore-missing-imports scripts/ tests/` reported 2 type errors in `tests/test_all.py:196-197` where `c0` shadowed `int` loop variable with `dict | None`. | Renamed affine constant loop variable to `const0`. Verified `mypy=0` across all 5 files. |
+| **P-03** | Cycle 2 | `gap` | High | Formalization lacked explicit standalone `NonVacuity.lean` and `AdversarialTests.lean` modules and live CI negative Lean kernel rejection check required by Playbook v1.3 Gold Standard. | Added `lean/PVsNP/NonVacuity.lean` (5 concrete witnesses) and `lean/PVsNP/AdversarialTests.lean` (5 sharpness refutations, 2 strictly zero-axiom), expanded `VerifyAxioms.lean` to 25 declarations, and added live negative Lean kernel rejection gate in `.github/workflows/ci.yml`. |
+| **P-04** | Cycle 2 | `gap` | High | Bibliography (27 references in `paper/main.tex`) lacked automated live Crossref DOI & retraction verification (`scripts/check_citations.py`, `docs/citation-audit.md`). | Added `scripts/check_citations.py` and verified 27/27 entries live (25 Crossref HTTP-200 DOIs + 2 archival print records, 0 retractions). |
+| **P-05** | Cycle 3 | `gap` | Medium | `data/MANIFEST.sha256` lacked an external RFC 3161 TSA timestamp, and the static Blueprint (`scripts/build_blueprint.py`) lacked interactive search/module-click filtering and `prefers-reduced-motion`. | Generated live DigiCert RFC 3161 timestamp (`data/MANIFEST.sha256.tsr`) over LF-deterministic `MANIFEST.sha256`, and upgraded `scripts/build_blueprint.py` to an interactive searchable WCAG 2.2 AA Blueprint DAG covering all 25 audited declarations. |

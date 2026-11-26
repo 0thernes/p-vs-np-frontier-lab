@@ -11,7 +11,6 @@ Experiment 3:
 
 from __future__ import annotations
 
-import itertools
 import json
 import random
 from pathlib import Path

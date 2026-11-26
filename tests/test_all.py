@@ -19,22 +19,15 @@ from __future__ import annotations
 import itertools
 import json
 import re
-import sys
 from fractions import Fraction
 from pathlib import Path
 
-import pytest
+from experiments import exp2_multiplicative_complexity as exp2
+from experiments import exp5_char2_permanent_determinant as exp5
 
 ROOT = Path(__file__).resolve().parent.parent
 RESULTS = ROOT / "results"
 LEAN_DIR = ROOT / "lean"
-
-if str(ROOT) not in sys.path:
-    sys.path.insert(0, str(ROOT))
-
-from experiments import exp2_multiplicative_complexity as exp2
-from experiments import exp3_markov_and_catalytic as exp3
-from experiments import exp5_char2_permanent_determinant as exp5
 
 
 def load_json(name: str) -> dict:
@@ -155,15 +148,14 @@ def test_exp2_bruteforce_sat_encoder_equivalence_n3() -> None:
     on stratified representatives covering MC=0, MC=1, and MC>=2 (including negative
     UNSAT tests). Guarantees zero encoding bias in the CaDiCaL SAT synthesis engine.
     """
-    n = 3
     mc_le_0: set[tuple[int, ...]] = set()
     mc_le_1: set[tuple[int, ...]] = set()
 
     # Exact brute-force enumeration of MC <= 0 (all 16 affine functions on F2^3)
-    for c0 in (0, 1):
+    for const0 in (0, 1):
         for coeffs in itertools.product((0, 1), repeat=3):
             tt = tuple(
-                c0 ^ ((coeffs[0] & (u & 1)) ^ (coeffs[1] & ((u >> 1) & 1)) ^ (coeffs[2] & ((u >> 2) & 1)))
+                const0 ^ ((coeffs[0] & (u & 1)) ^ (coeffs[1] & ((u >> 1) & 1)) ^ (coeffs[2] & ((u >> 2) & 1)))
                 for u in range(8)
             )
             mc_le_0.add(tt)
@@ -331,7 +323,7 @@ def test_lean_zero_forbidden_tokens_and_module_headers() -> None:
     lean_files = sorted(
         f for f in LEAN_DIR.rglob("*.lean") if ".lake" not in f.parts
     )
-    assert len(lean_files) == 15  # 14 proof/spec modules + PalomarChallenge.lean
+    assert len(lean_files) == 17  # 14 core + NonVacuity + AdversarialTests + PalomarChallenge.lean
     forbidden = re.compile(r"\b(sorry|admit|native_decide|implemented_by)\b|^\s*axiom\b|@\[extern", re.M)
 
     for f in lean_files:
@@ -355,8 +347,9 @@ def test_lean_axioms_strictly_standard() -> None:
     assert ax_file.exists()
     text = ax_file.read_text(encoding="utf-8")
     allowed = {"propext", "Classical.choice", "Quot.sound"}
-    matches = re.findall(r"'Solution\.(\w+)' depends on axioms: \[([^\]]*)\]", text)
-    assert len(matches) == 15
+    matches = re.findall(r"'((?:Solution|PVsNP\.NonVacuity|PVsNP\.AdversarialTests)\.\w+)' depends on axioms: \[([^\]]*)\]", text)
+    zero_ax = re.findall(r"'((?:Solution|PVsNP\.NonVacuity|PVsNP\.AdversarialTests)\.\w+)' does not depend on any axioms", text)
+    assert len(matches) + len(zero_ax) == 25
     for name, ax_str in matches:
         used = {a.strip() for a in ax_str.split(",") if a.strip()}
         assert used.issubset(allowed), f"{name} used disallowed axioms: {used - allowed}"

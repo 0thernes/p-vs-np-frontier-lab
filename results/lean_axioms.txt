@@ -13,3 +13,13 @@
 'Solution.prove_perm_det_char2' depends on axioms: [propext, Classical.choice, Quot.sound]
 'Solution.prove_catalytic_algebra' depends on axioms: [propext, Quot.sound]
 'Solution.prove_all_frontier_theorems' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PVsNP.NonVacuity.nv_odd_cycle_k0_contextual' depends on axioms: [propext, Quot.sound]
+'PVsNP.NonVacuity.nv_mermin_peres_contextual' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PVsNP.NonVacuity.nv_witness_mat_n2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PVsNP.NonVacuity.nv_natural_proof_n1' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PVsNP.NonVacuity.nv_catalytic_d2_concrete' depends on axioms: [propext, Quot.sound]
+'PVsNP.AdversarialTests.adv_const_true_not_projection' does not depend on any axioms
+'PVsNP.AdversarialTests.adv_const_false_not_projection' does not depend on any axioms
+'PVsNP.AdversarialTests.adv_markov_1not_cannot_invert_2bits' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PVsNP.AdversarialTests.adv_mc_and3_not_one_gate' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PVsNP.AdversarialTests.adv_perm_ne_det_mod3_n2' depends on axioms: [propext, Classical.choice, Quot.sound]

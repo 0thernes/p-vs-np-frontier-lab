@@ -32,7 +32,7 @@ items:
   A05: {status: n/a, note: "Formal verification & AMS-LaTeX research lab with vector PDF figures"}
   A06: {status: done, evidence: "LICENSE (Apache-2.0 code + CC-BY-4.0 prose/figures)"}
   A07: {status: done, evidence: "CHANGELOG.md"}
-  A08: {status: done, evidence: "VERSION (1.1.0) matches CHANGELOG.md and CITATION.cff"}
+  A08: {status: done, evidence: "VERSION (1.2.0) matches CHANGELOG.md and CITATION.cff"}
   A09: {status: done, evidence: "tests/test_all.py"}
   A10: {status: done, evidence: ".github/workflows/ci.yml"}
   A11: {status: done, evidence: ".github/workflows/release.yml"}
@@ -108,10 +108,10 @@ items:
   B36: {status: done, evidence: "docs/threat-model.md"}
   B37: {status: done, evidence: "MANIFEST.sha256 and .github/workflows/release.yml SHA256SUMS"}
   B38: {status: done, evidence: "actions/attest-build-provenance in .github/workflows/ci.yml and release.yml"}
-  B39: {status: done, evidence: "data/MANIFEST.sha256 synchronized with MANIFEST.sha256"}
+  B39: {status: done, evidence: "data/MANIFEST.sha256 synchronized with MANIFEST.sha256 and DigiCert RFC 3161 TSA timestamp data/MANIFEST.sha256.tsr"}
   B40: {status: done, evidence: "docs/run-log.md"}
   B41: {status: done, evidence: "LIMITATIONS.md (including Real vs. Metaphor)"}
   B42: {status: done, evidence: "CLAIMS.md explicit falsification tests and non-claim boundary"}
   B43: {status: done, evidence: "REPLICATION.md"}
   B44: {status: done, evidence: "REPLICATION.md dated replication log"}
-  B45: {status: done, evidence: "docs/reviews/2026-11-25-redteam-v1.1.0.md and docs/10-pass-review.md"}
+  B45: {status: done, evidence: "docs/reviews/2026-11-26-3cycle-hardening-v1.2.0.md, docs/reviews/2026-11-25-redteam-v1.1.0.md, and docs/10-pass-review.md"}

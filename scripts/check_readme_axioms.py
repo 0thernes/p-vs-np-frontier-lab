@@ -9,6 +9,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 ALLOWED = {"propext", "Classical.choice", "Quot.sound"}
+DECL_PREFIXES = ("'Solution.", "'PVsNP.NonVacuity.", "'PVsNP.AdversarialTests.")
 
 
 def main() -> int:
@@ -21,23 +22,25 @@ def main() -> int:
     ax_lines = [
         ln.strip()
         for ln in ax_path.read_text(encoding="utf-8").splitlines()
-        if ln.strip().startswith("'Solution.")
+        if ln.strip().startswith(DECL_PREFIXES)
     ]
-    if len(ax_lines) != 15:
-        print(f"ERROR: expected 15 audited theorems in results/lean_axioms.txt, got {len(ax_lines)}", file=sys.stderr)
+    if len(ax_lines) != 25:
+        print(f"ERROR: expected 25 audited declarations in results/lean_axioms.txt, got {len(ax_lines)}", file=sys.stderr)
         return 1
 
     readme_txt = readme_path.read_text(encoding="utf-8")
     errors: list[str] = []
     for ln in ax_lines:
-        m = re.match(r"^'(Solution\.\w+)' depends on axioms: \[([^\]]*)\]$", ln)
-        if not m:
+        m_dep = re.match(r"^'([\w\.]+)' depends on axioms: \[([^\]]*)\]$", ln)
+        m_zero = re.match(r"^'([\w\.]+)' does not depend on any axioms$", ln)
+        if m_dep:
+            name, raw_ax = m_dep.groups()
+            used = {a.strip() for a in raw_ax.split(",") if a.strip()}
+            if not used.issubset(ALLOWED):
+                errors.append(f"{name} uses disallowed axioms: {sorted(used - ALLOWED)}")
+        elif not m_zero:
             errors.append(f"Unrecognized axiom line: {ln}")
             continue
-        name, raw_ax = m.groups()
-        used = {a.strip() for a in raw_ax.split(",") if a.strip()}
-        if not used.issubset(ALLOWED):
-            errors.append(f"{name} uses disallowed axioms: {sorted(used - ALLOWED)}")
         if ln not in readme_txt:
             errors.append(f"README.md missing verbatim axiom line: {ln}")
 

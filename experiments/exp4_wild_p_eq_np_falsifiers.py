@@ -372,8 +372,6 @@ def verify_hensel_lifting_obstruction() -> dict:
       - Mod 3: dropping x_i^2 - x_i = 0, the UNSAT 8-clause system STILL HAS roots in F_3^3?
         Test ALL 3^3 = 27 points in F_3^3!
     """
-    clauses = list(itertools.product((1, -1), repeat=3))  # 8 clauses
-
     def eval_clause_poly(cl: tuple[int, int, int], x: tuple[int, int, int], p: int) -> int:
         prod = 1
         for i, s in enumerate(cl):
@@ -401,7 +399,6 @@ def verify_hensel_lifting_obstruction() -> dict:
     # What if we test the SUM-OF-CLAUSES polynomial F(x) = sum_c P_c(x) = 0 mod p (the standard polynomial reduction)?!
     # Over Z, since P_c(x) >= 0 on {0,1}^n, sum_c P_c(x) = 0 iff ALL P_c(x) = 0!
     # Over F_3, sum_c P_c(x) = 0 mod 3 has SPURIOUS ROOTS even for UNSAT 3-SAT!!
-    spurious_f3_roots = []
     # Check 3-clause / 8-clause UNSAT sum polynomial F(x) = sum_{c in 8 clauses} P_c(x)
     # Note: for ANY x in {0,1}^3, exactly ONE of the 8 clauses is violated, so F(x) = 1 (mod Z)!
     # Wait: what is F(x) as an algebraic polynomial?
