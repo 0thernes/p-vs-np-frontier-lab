@@ -52,7 +52,8 @@ jobs:
             rm -f _AdversarialFalseCheck.lean /tmp/neg_elab.log
             exit 1
           fi
-          grep -qE "tactic 'decide' failed|evaluated to|type mismatch" /tmp/neg_elab.log
+          cat /tmp/neg_elab.log
+          grep -qE "proved that the proposition|tactic .*decide.* failed|type mismatch" /tmp/neg_elab.log
           rm -f _AdversarialFalseCheck.lean /tmp/neg_elab.log
           echo "PASS: Negative elaboration test rejected false theorem with expected decide error."
           lake env leanchecker --fresh Solution
