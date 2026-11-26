@@ -14,7 +14,9 @@ from __future__ import annotations
 import itertools
 import json
 import os
+import shutil
 import subprocess
+import sys
 import tempfile
 import time
 from pathlib import Path
@@ -23,12 +25,30 @@ ROOT = Path(__file__).resolve().parent.parent
 RESULTS_DIR = ROOT / "results"
 RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 
-CADICAL_BIN = Path(
-    os.environ.get(
-        "CADICAL_BIN",
-        r"C:\Users\Alexa\.elan\toolchains\leanprover--lean4---v4.35.0\bin\cadical.exe",
-    )
-)
+
+def resolve_cadical_bin() -> Path:
+    """Resolve CaDiCaL binary cross-platform without hardcoded usernames."""
+    env_bin = os.environ.get("CADICAL_BIN")
+    if env_bin:
+        p = Path(env_bin)
+        if p.is_file():
+            return p
+    which = shutil.which("cadical")
+    if which:
+        return Path(which)
+    exe = "cadical.exe" if sys.platform == "win32" else "cadical"
+    pinned = Path.home() / ".elan" / "toolchains" / "leanprover--lean4---v4.35.0" / "bin" / exe
+    if pinned.is_file():
+        return pinned
+    elan_tc = Path.home() / ".elan" / "toolchains"
+    if elan_tc.is_dir():
+        for cand in sorted(elan_tc.glob(f"*/bin/{exe}"), reverse=True):
+            if cand.is_file():
+                return cand
+    return pinned
+
+
+CADICAL_BIN = resolve_cadical_bin()
 
 
 # ---------------------------------------------------------------------------

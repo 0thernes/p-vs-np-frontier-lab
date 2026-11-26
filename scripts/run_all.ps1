@@ -16,9 +16,9 @@ $ErrorActionPreference = "Stop"
 $Repo = Split-Path -Parent $PSScriptRoot
 $Py   = Join-Path $Repo ".venv\Scripts\python.exe"
 $Pytest = Join-Path $Repo ".venv\Scripts\pytest.exe"
-$Tectonic = "C:\Users\Alexa\.local\bin\tectonic.exe"
-$ElanBin  = "C:\Users\Alexa\.elan\bin"
-$LeanBin  = "C:\Users\Alexa\.elan\toolchains\leanprover--lean4---v4.35.0\bin"
+$Tectonic = Join-Path $env:USERPROFILE ".local\bin\tectonic.exe"
+$ElanBin  = Join-Path $env:USERPROFILE ".elan\bin"
+$LeanBin  = Join-Path $env:USERPROFILE ".elan\toolchains\leanprover--lean4---v4.35.0\bin"
 
 if (Test-Path -LiteralPath $ElanBin) {
     $env:PATH = "$ElanBin;$LeanBin;$env:PATH"

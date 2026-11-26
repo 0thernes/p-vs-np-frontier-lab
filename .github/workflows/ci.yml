@@ -20,7 +20,7 @@ jobs:
   lean-6kernel:
     name: Zero-Mathlib Lean 4.35.0 (15 Targets & 6-Kernel Palomar Comparator)
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
       - name: Install bubblewrap for sandboxed multi-kernel replay
@@ -57,26 +57,53 @@ jobs:
         os: [ubuntu-latest, macos-latest, windows-latest]
     steps:
       - uses: actions/checkout@v4
-      - name: Install elan for bundled CaDiCaL 2.1.2 (Ubuntu)
+      - name: Install CaDiCaL SAT solver (Ubuntu)
         if: matrix.os == 'ubuntu-latest'
         run: |
-          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain leanprover/lean4:v4.35.0
-          echo "CADICAL_BIN=$HOME/.elan/toolchains/leanprover--lean4---v4.35.0/bin/cadical" >> "$GITHUB_ENV"
+          sudo apt-get update && sudo apt-get install -y cadical
+          echo "CADICAL_BIN=$(command -v cadical)" >> "$GITHUB_ENV"
+      - name: Install bundled CaDiCaL 2.1.2 via Lean 4.35.0 (macOS)
+        if: matrix.os == 'macos-latest'
+        run: |
+          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none
+          "$HOME/.elan/bin/elan" toolchain install leanprover/lean4:v4.35.0
+          CAD=$(find "$HOME/.elan/toolchains" -name cadical -type f | head -n 1)
+          test -x "$CAD"
+          echo "CADICAL_BIN=$CAD" >> "$GITHUB_ENV"
+      - name: Install bundled CaDiCaL 2.1.2 via Lean 4.35.0 (Windows)
+        if: matrix.os == 'windows-latest'
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          Invoke-WebRequest -Uri "https://raw.githubusercontent.com/leanprover/elan/master/elan-init.ps1" -OutFile "$env:TEMP\elan-init.ps1"
+          & "$env:TEMP\elan-init.ps1" -y --default-toolchain none
+          & "$env:USERPROFILE\.elan\bin\elan.exe" toolchain install leanprover/lean4:v4.35.0
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $cad = Join-Path $env:USERPROFILE ".elan\toolchains\leanprover--lean4---v4.35.0\bin\cadical.exe"
+          if (-not (Test-Path -LiteralPath $cad)) { throw "cadical.exe not found at $cad" }
+          "CADICAL_BIN=$cad" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
       - uses: actions/setup-python@v5
         with:
           python-version: "3.13"
       - name: Install pinned Python dependencies
         run: python -m pip install -r requirements.lock.txt
-      - name: Run pytest suite & README axiom parity check
+      - name: Run pytest suite
+        run: python -m pytest -v tests/test_all.py
+      - name: Run README axiom parity check
+        run: python scripts/check_readme_axioms.py
+      - name: Run proof blueprint generator
+        run: python scripts/build_blueprint.py
+      - name: Verify SHA-256 provenance manifests (all OSes)
         run: |
-          python -m pytest -v tests/test_all.py
-          python scripts/check_readme_axioms.py
-          python scripts/build_blueprint.py
-      - name: Verify SHA-256 provenance manifest (Unix)
-        if: runner.os != 'Windows'
-        run: |
-          sha256sum -c MANIFEST.sha256
-          sha256sum -c data/MANIFEST.sha256
+          python -c "import hashlib, pathlib, sys
+          for mf in ('MANIFEST.sha256', 'data/MANIFEST.sha256'):
+              for line in pathlib.Path(mf).read_text(encoding='utf-8').splitlines():
+                  line = line.strip()
+                  if not line or line.startswith('#'): continue
+                  exp, rel = line.split('  ', 1)
+                  got = hashlib.sha256(pathlib.Path(rel).read_bytes()).hexdigest().lower()
+                  assert got == exp.lower(), f'SHA mismatch on {rel} in {mf}'
+          print('ALL SHA-256 MANIFESTS VERIFIED')"
 
   latex-paper-and-provenance:
     name: AMS-LaTeX White Paper, arXiv Bundle & SLSA Attestation
@@ -87,8 +114,8 @@ jobs:
       - name: Install Tectonic and compile white paper + standalone arXiv tarball
         run: |
           curl --proto '=https' --tlsv1.2 -fsSL https://drop-sh.fullyjustified.net | sh
+          mkdir -p paper/build /tmp/arxiv_ci/out
           ./tectonic -X compile paper/main.tex --outdir paper/build
-          mkdir -p /tmp/arxiv_ci
           tar -xzf dist/arxiv_submission.tar.gz -C /tmp/arxiv_ci
           ./tectonic -X compile /tmp/arxiv_ci/main.tex --outdir /tmp/arxiv_ci/out
       - name: Generate SHA256SUMS and attest build provenance (SLSA)
