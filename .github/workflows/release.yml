@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Collect release artifacts and generate SHA256SUMS
         run: |
           mkdir -p release-dist
@@ -29,7 +29,7 @@ jobs:
           (cd release-dist && sha256sum * > SHA256SUMS)
           cat release-dist/SHA256SUMS
       - name: Generate Sigstore SLSA build provenance attestations
-        uses: actions/attest-build-provenance@v2
+        uses: actions/attest-build-provenance@v4
         with:
           subject-path: release-dist/*
       - name: Publish GitHub Release
