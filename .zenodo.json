@@ -1,0 +1,34 @@
+{
+  "title": "Anatomy of the P vs. NP Barrier: Zero-Mathlib Lean 4 Formalization of Classical Obstructions, Exact SAT Multiplicative Complexity, and Four Algorithmic Falsifiers",
+  "description": "Machine-checks 25 zero-Mathlib Lean 4.35.0 declarations (14 statements C1-C14 (the Baker-Gill-Solovay theorem, the counting step of natural proofs, and twelve classical supporting lemmas) + prove_all + 5 concrete NonVacuity witnesses NV1-NV5 + 5 AdversarialTests sharpness refutations ADV1-ADV5, with 15 isolated Palomar Challenge/Solution comparator targets and a negative elaboration test in CI (a false statement must fail to compile)): Baker-Gill-Solovay relativization (C1-C2), the counting step of the natural-proofs argument, a telescoping bound and a largeness witness (C3-C5), minimal unsatisfiability of odd-cycle and Mermin-Peres XOR systems (C6-C7), polymorphism facts and projection-only rigidity of {x\u2228y\u2228z, \u00acx\u2228\u00acy\u2228\u00acz} (C8-C9), Markov's negation bound and a k-NOT compilation without size bound (C10-C11), AND-count versus F2-degree (C12), permanent = determinant mod 2 (C13), and reversible register programs (C14). Paired with exact CaDiCaL 2.1.2 SAT multiplicative-complexity synthesis cross-checked by exhaustive brute-force enumeration, three exact counterexamples and one numerical illustration against four illustrative SAT heuristics (CTDS ODE blowup, rational LP integrality gaps, 3-adic Hensel non-Boolean root, completely rigid |Aut|=1 3-SAT instance), 27 references (three DOIs in the repository's citation audit resolve to unrelated records; correction pending), DigiCert RFC 3161 TSA timestamp (data/MANIFEST.sha256.tsr) over LF-normalized 21-artifact MANIFEST.sha256, 0 ruff / 0 mypy errors, 12/12 cross-OS pytest+Hypothesis tests, 15-page zero-overfull AMS-LaTeX preprint + standalone arXiv tarball, interactive searchable WCAG 2.2 AA GitHub Pages Proof Blueprint, and 100.0% (63/63) Build Standard v1.2.0 compliance.",
+  "upload_type": "software",
+  "license": "apache-2.0",
+  "creators": [
+    {
+      "name": "Donahue, Alexander Stephen",
+      "affiliation": "Independent Researcher, Spokane, WA, USA",
+      "orcid": "0009-0006-8168-9648"
+    }
+  ],
+  "keywords": [
+    "Computational Complexity",
+    "Proof Complexity",
+    "Formal Verification",
+    "Lean 4",
+    "Palomar Registry",
+    "open research"
+  ],
+  "notes": "Code and Lean 4.35.0 proofs are licensed under Apache-2.0; manuscripts and figures are licensed under CC-BY-4.0. Independent research preprint (v1.2.0); not externally peer-reviewed. AI tools (Antigravity / Google DeepMind) assisted under human direction and audit.",
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/0thernes/p-vs-np-frontier-lab",
+      "relation": "isSupplementTo",
+      "scheme": "url"
+    },
+    {
+      "identifier": "https://0thernes.github.io/p-vs-np-frontier-lab/",
+      "relation": "isDocumentedBy",
+      "scheme": "url"
+    }
+  ]
+}
