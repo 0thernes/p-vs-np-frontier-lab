@@ -5,6 +5,9 @@
 # footprint, and multi-kernel verification status.
 
 schema_version: "1.2"
+author: "Alexander Stephen Donahue"
+orcid: "0009-0006-8168-9648"
+affiliation: "Independent Researcher, Spokane, WA, USA"
 lean_toolchain: "leanprover/lean4:v4.35.0"
 mathlib_dependency: false
 module_headers_all_files: true
