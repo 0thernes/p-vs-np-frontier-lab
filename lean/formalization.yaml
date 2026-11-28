@@ -1,14 +1,75 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
 # SPDX-License-Identifier: Apache-2.0
-# Formalization Ledger: P vs NP Frontier & Barrier Anatomy Lab
-# Maps every paper theorem claim (C1-C14) to its exact Lean 4.35.0 statement in
-# lean/Challenge.lean, proof witness in lean/Solution.lean, verbatim #print axioms
-# footprint, and multi-kernel verification status.
-
-schema_version: "1.2"
-author: "Alexander Stephen Donahue"
-orcid: "0009-0006-8168-9648"
-affiliation: "Independent Researcher, Spokane, WA, USA"
-lean_toolchain: "leanprover/lean4:v4.35.0"
+version: v0.4
+project:
+  name: 'P vs NP Frontier and Barrier Anatomy Lab: Zero-Mathlib Lean 4.35 Formalization of Classical Complexity
+    Barriers'
+  description: Zero-Mathlib Lean 4.35.0 formalization of 14 classical complexity-theoretic barrier theorems
+    and supporting lemmas (Baker-Gill-Solovay dual relativization, Razborov-Rudich natural-proofs counting
+    step, and classical supporting lemmas C1, C4-C14) across 15 isolated comparator targets, 5 non-vacuity
+    witnesses, and 5 adversarial refutations strictly within [propext, Classical.choice, Quot.sound].
+    Explicitly does NOT prove P = NP or P != NP; all formalized statements are known classical mathematics.
+  authors:
+  - Alexander Stephen Donahue
+  responsible_maintainers:
+  - Alexander Stephen Donahue
+  license: Apache-2.0
+  release_version: 1.2.0
+  orcid: 0009-0006-8168-9648
+classification:
+  arxiv:
+  - cs.CC
+  - cs.LO
+  msc2020:
+  - 68Q15
+  - 03B35
+sources:
+- title: Relativizations of the P =? NP Question
+  authors:
+  - Theodore Baker
+  - John Gill
+  - Robert Solovay
+  id: https://doi.org/10.1137/0204037
+  type: article
+  relationship: formalizes
+  author_endorsement: n/a
+  note: Baker-Gill-Solovay dual relativization barrier (C2).
+- title: Natural Proofs
+  authors:
+  - Alexander A. Razborov
+  - Steven Rudich
+  id: https://doi.org/10.1006/jcss.1997.1494
+  type: article
+  relationship: formalizes
+  author_endorsement: not-contacted
+  note: Counting step of the natural-proofs barrier (C3).
+- title: P vs NP Frontier & Barrier Anatomy Lab (v1.2.0)
+  authors:
+  - Alexander Stephen Donahue
+  id: https://github.com/0thernes/p-vs-np-frontier-lab
+  type: preprint
+  relationship: other
+  author_endorsement: participated
+  note: Zero-Mathlib formalization and pedagogical barrier anatomy; no new open problem claimed solved.
+automation:
+  methods:
+  - method: manual
+    notes: Alexander Stephen Donahue directed problem scoping, epistemic boundary enforcement, and statement
+      fidelity auditing.
+  - method: agent
+    models:
+    - Gemini
+    framework: Antigravity
+    notes: Assisted with zero-Mathlib Lean 4.35.0 formalization and multi-kernel CI tooling under human
+      oversight.
+review:
+  status: self-assessed
+  notes: Not externally peer-reviewed. Machine-checked across 6 independent Lean 4.35.0 proof kernels.
+schema_version: '1.2'
+author: Alexander Stephen Donahue
+orcid: 0009-0006-8168-9648
+affiliation: Independent Researcher, Spokane, WA, USA
+lean_toolchain: leanprover/lean4:v4.35.0
 mathlib_dependency: false
 module_headers_all_files: true
 forbidden_token_hits_default_targets: 0
@@ -20,147 +81,190 @@ adversarial_refutations: 5
 negative_elaboration_test: true
 total_lean_lines: 8266
 max_file_lines: 2557
-
 epistemic_boundary:
-  p_vs_np_status: "OPEN"
-  disclaimer: >
-    No theorem in this repository proves P = NP or P != NP. All 14 formalized
-    statements in Challenge.lean/Solution.lean are known mathematics: the
-    Baker-Gill-Solovay dual relativization theorem (C2), the counting step of
-    the natural-proofs argument (C3), and twelve classical supporting lemmas
+  p_vs_np_status: OPEN
+  disclaimer: 'No theorem in this repository proves P = NP or P != NP. All 14 formalized statements in
+    Challenge.lean/Solution.lean are known mathematics: the Baker-Gill-Solovay dual relativization theorem
+    (C2), the counting step of the natural-proofs argument (C3), and twelve classical supporting lemmas
     (C1, C4-C14). No new theorem is claimed.
 
+    '
 kernels_verified:
-  - name: "lean (C++ reference kernel + VerifyAxioms.lean)"
-    exit_code: 0
-    scope: "All 25 audited declarations (15 Solution + 5 NonVacuity + 5 AdversarialTests); axioms strictly within [propext, Classical.choice, Quot.sound]"
-  - name: "leanchecker (C++ external .olean replay)"
-    exit_code: 0
-    scope: "Solution.olean and full transitive import graph"
-  - name: "leanchecker-paranoid (C++ paranoid .olean replay)"
-    exit_code: 0
-    scope: "Solution.olean with full paranoid definitional checks (same reference kernel implementation in paranoid mode)"
-  - name: "lean4lean (Ubuntu CI via lake check --paranoid)"
-    exit_code: 0
-    scope: "Verified Lean-in-Lean kernel replay inside Linux bubblewrap sandbox (CI run 45829725341)"
-  - name: "con-leche --verified (Lean-in-Lean set-model-sound kernel)"
-    exit_code: 0
-    verdict: "con-leche: accepted 3982 declarations (--verified)"
-    export_sha256: "7F981919BA1055E81695FBEDF2CE4A249F195129453DB3F39AF200EBB1BC764F"
-  - name: "con-ron --verified (Aeneas-extracted verified Rust arena kernel)"
-    exit_code: 0
-    verdict: "con-ron: accepted 3982 declarations (--verified)"
-    export_sha256: "7F981919BA1055E81695FBEDF2CE4A249F195129453DB3F39AF200EBB1BC764F"
-  - name: "nanoda_bin 0.4.19 (independent Rust external typechecker)"
-    exit_code: 0
-    verdict: "Checked 4319 declarations with no typechecker errors (unpermitted_axiom_hard_error=true)"
-    permitted_axioms: ["propext", "Classical.choice", "Quot.sound"]
-    export_sha256: "7F981919BA1055E81695FBEDF2CE4A249F195129453DB3F39AF200EBB1BC764F"
-
+- name: lean (C++ reference kernel + VerifyAxioms.lean)
+  exit_code: 0
+  scope: All 25 audited declarations (15 Solution + 5 NonVacuity + 5 AdversarialTests); axioms strictly
+    within [propext, Classical.choice, Quot.sound]
+- name: leanchecker (C++ external .olean replay)
+  exit_code: 0
+  scope: Solution.olean and full transitive import graph
+- name: leanchecker-paranoid (C++ paranoid .olean replay)
+  exit_code: 0
+  scope: Solution.olean with full paranoid definitional checks (same reference kernel implementation in
+    paranoid mode)
+- name: lean4lean (Ubuntu CI via lake check --paranoid)
+  exit_code: 0
+  scope: Verified Lean-in-Lean kernel replay inside Linux bubblewrap sandbox (CI run 45829725341)
+- name: con-leche --verified (Lean-in-Lean set-model-sound kernel)
+  exit_code: 0
+  verdict: 'con-leche: accepted 3982 declarations (--verified)'
+  export_sha256: 7F981919BA1055E81695FBEDF2CE4A249F195129453DB3F39AF200EBB1BC764F
+- name: con-ron --verified (Aeneas-extracted verified Rust arena kernel)
+  exit_code: 0
+  verdict: 'con-ron: accepted 3982 declarations (--verified)'
+  export_sha256: 7F981919BA1055E81695FBEDF2CE4A249F195129453DB3F39AF200EBB1BC764F
+- name: nanoda_bin 0.4.19 (independent Rust external typechecker)
+  exit_code: 0
+  verdict: Checked 4319 declarations with no typechecker errors (unpermitted_axiom_hard_error=true)
+  permitted_axioms:
+  - propext
+  - Classical.choice
+  - Quot.sound
+  export_sha256: 7F981919BA1055E81695FBEDF2CE4A249F195129453DB3F39AF200EBB1BC764F
 toolchain_issues_documented:
-  - name: "lean4lean (bundled v4.35.0 Windows binary)"
-    exit_code: 1
-    classification: "issue"
-    diagnosis: >
-      Upstream packaging mismatch in leanprover/lean4:v4.35.0 Windows bundle:
-      lean4lean.exe rejects even Lean 4.35.0's own stdlib Init.Prelude.olean with
-      'incompatible header'. Not a defect in this project.
-  - name: "lake check (Windows host)"
-    exit_code: 2
-    classification: "issue"
-    diagnosis: >
-      Upstream Windows limitation: lake check requires Linux bwrap sandboxing and
-      POSIX git on PATH. Direct invocation of all underlying bundled checkers
-      succeeds with exit code 0 on Windows; Linux CI runs lake check natively.
+- name: lean4lean (bundled v4.35.0 Windows binary)
+  exit_code: 1
+  classification: issue
+  diagnosis: 'Upstream packaging mismatch in leanprover/lean4:v4.35.0 Windows bundle: lean4lean.exe rejects
+    even Lean 4.35.0''s own stdlib Init.Prelude.olean with ''incompatible header''. Not a defect in this
+    project.
 
+    '
+- name: lake check (Windows host)
+  exit_code: 2
+  classification: issue
+  diagnosis: 'Upstream Windows limitation: lake check requires Linux bwrap sandboxing and POSIX git on
+    PATH. Direct invocation of all underlying bundled checkers succeeds with exit code 0 on Windows; Linux
+    CI runs lake check natively.
+
+    '
 claims:
-  - id: "C1"
-    title: "P subseteq NP for every oracle O (explicit 4-tape OTM model)"
-    challenge_stmt: "Challenge.PSubsetNPStmt"
-    solution_proof: "Solution.prove_p_subset_np"
-    module: "PVsNP.OTM"
-    axioms: ["propext", "Classical.choice", "Quot.sound"]
-  - id: "C2"
-    title: "Baker-Gill-Solovay Dual Relativization Theorem (Separation & Collapse Oracles)"
-    challenge_stmt: "Challenge.BakerGillSolovayStmt"
-    solution_proof: "Solution.prove_baker_gill_solovay"
-    module: "PVsNP.Relativization"
-    axioms: ["propext", "Classical.choice", "Quot.sound"]
-  - id: "C3"
-    title: "Counting Step Behind Razborov-Rudich Natural Proofs (No Constructivity/Circuit Class)"
-    challenge_stmt: "Challenge.NaturalProofBreaksPRFStmt"
-    solution_proof: "Solution.prove_natural_proof_breaks_prf"
-    module: "PVsNP.NaturalProofs"
-    axioms: ["propext", "Classical.choice", "Quot.sound"]
-  - id: "C4"
-    title: "Integer Pigeonhole Bound (m*B < |a_0 - a_m| implies some |a_i - a_{i+1}| > B)"
-    challenge_stmt: "Challenge.HybridTelescopingStmt"
-    solution_proof: "Solution.prove_hybrid_telescoping"
-    module: "PVsNP.NaturalProofs"
-    axioms: ["propext", "Quot.sound"]
-  - id: "C5"
-    title: "Largeness Witness (nonConstantProp accepts >= 1/2 of truth tables and rejects constants)"
-    challenge_stmt: "Challenge.NaturalProofNonvacuousStmt"
-    solution_proof: "Solution.prove_natural_proof_nonvacuous"
-    module: "PVsNP.NaturalProofs"
-    axioms: ["propext", "Classical.choice", "Quot.sound"]
-  - id: "C6"
-    title: "Odd-Cycle XOR Minimal Unsatisfiability for All 2k+1 Variables (k >= 0)"
-    challenge_stmt: "Challenge.OddCycleContextualStmt"
-    solution_proof: "Solution.prove_odd_cycle_contextual"
-    module: "PVsNP.SheafPolymorphism"
-    axioms: ["propext", "Quot.sound"]
-  - id: "C7"
-    title: "Mermin-Peres 9-Variable Parity System Minimal Unsatisfiability"
-    challenge_stmt: "Challenge.MerminPeresContextualStmt"
-    solution_proof: "Solution.prove_mermin_peres_contextual"
-    module: "PVsNP.SheafPolymorphism"
-    axioms: ["propext", "Classical.choice", "Quot.sound"]
-  - id: "C8"
-    title: "Four Tractable Polymorphisms (XOR Maltsev, Horn AND, Dual-Horn OR, 2-SAT Majority)"
-    challenge_stmt: "Challenge.TractablePolymorphismsStmt"
-    solution_proof: "Solution.prove_tractable_polymorphisms"
-    module: "PVsNP.SheafPolymorphism"
-    axioms: ["propext"]
-  - id: "C9"
-    title: "All-Arity Monotone 3-SAT Polymorphism Rigidity & Minimality of {R000, R111} (Post's Lattice)"
-    challenge_stmt: "Challenge.Monotone3SATRigidStmt"
-    solution_proof: "Solution.prove_monotone_3sat_rigid"
-    module: "PVsNP.SheafPolymorphism"
-    axioms: ["propext", "Quot.sound"]
-  - id: "C10"
-    title: "Markov Bounded-Negation Tight Threshold (<= r NOT cannot invert >= 2^r; k NOT inverts 2^k - 1)"
-    challenge_stmt: "Challenge.MarkovInverterTightStmt"
-    solution_proof: "Solution.prove_markov_inverter_tight"
-    module: "PVsNP.CircuitPhaseTransition"
-    axioms: ["propext", "Classical.choice", "Quot.sound"]
-  - id: "C11"
-    title: "k-NOT Circuit Compilation (Existence; No Size Bound)"
-    challenge_stmt: "Challenge.FischerReductionStmt"
-    solution_proof: "Solution.prove_fischer_reduction"
-    module: "PVsNP.CircuitPhaseTransition"
-    axioms: ["propext", "Classical.choice", "Quot.sound"]
-  - id: "C12"
-    title: "Multiplicative Complexity Degree Lower Bound (deg_F2(f) <= k + 1) & MC(AND_n) >= n - 1"
-    challenge_stmt: "Challenge.MultiplicativeComplexityStmt"
-    solution_proof: "Solution.prove_multiplicative_complexity"
-    module: "PVsNP.CircuitPhaseTransition"
-    axioms: ["propext", "Classical.choice", "Quot.sound"]
-  - id: "C13"
-    title: "Characteristic-2 Permanent=Determinant Collapse & Universal p >= 3 Separation Witness W_n"
-    challenge_stmt: "Challenge.PermDetChar2Stmt"
-    solution_proof: "Solution.prove_perm_det_char2"
-    module: "PVsNP.CircuitPhaseTransition"
-    axioms: ["propext", "Classical.choice", "Quot.sound"]
-  - id: "C14"
-    title: "Reversible Straight-Line Program Reversibility & Exact d-Fold Constant Product (3*4^{d-1} - 2 Ops)"
-    challenge_stmt: "Challenge.CatalyticAlgebraStmt"
-    solution_proof: "Solution.prove_catalytic_algebra"
-    module: "PVsNP.CatalyticAlgebra"
-    axioms: ["propext", "Quot.sound"]
-  - id: "ALL"
-    title: "Conjunction of All 14 Formalized Statements"
-    challenge_stmt: "Challenge.AllFrontierTheoremsStmt"
-    solution_proof: "Solution.prove_all_frontier_theorems"
-    module: "Solution"
-    axioms: ["propext", "Classical.choice", "Quot.sound"]
+- id: C1
+  title: P subseteq NP for every oracle O (explicit 4-tape OTM model)
+  challenge_stmt: Challenge.PSubsetNPStmt
+  solution_proof: Solution.prove_p_subset_np
+  module: PVsNP.OTM
+  axioms:
+  - propext
+  - Classical.choice
+  - Quot.sound
+- id: C2
+  title: Baker-Gill-Solovay Dual Relativization Theorem (Separation & Collapse Oracles)
+  challenge_stmt: Challenge.BakerGillSolovayStmt
+  solution_proof: Solution.prove_baker_gill_solovay
+  module: PVsNP.Relativization
+  axioms:
+  - propext
+  - Classical.choice
+  - Quot.sound
+- id: C3
+  title: Counting Step Behind Razborov-Rudich Natural Proofs (No Constructivity/Circuit Class)
+  challenge_stmt: Challenge.NaturalProofBreaksPRFStmt
+  solution_proof: Solution.prove_natural_proof_breaks_prf
+  module: PVsNP.NaturalProofs
+  axioms:
+  - propext
+  - Classical.choice
+  - Quot.sound
+- id: C4
+  title: Integer Pigeonhole Bound (m*B < |a_0 - a_m| implies some |a_i - a_{i+1}| > B)
+  challenge_stmt: Challenge.HybridTelescopingStmt
+  solution_proof: Solution.prove_hybrid_telescoping
+  module: PVsNP.NaturalProofs
+  axioms:
+  - propext
+  - Quot.sound
+- id: C5
+  title: Largeness Witness (nonConstantProp accepts >= 1/2 of truth tables and rejects constants)
+  challenge_stmt: Challenge.NaturalProofNonvacuousStmt
+  solution_proof: Solution.prove_natural_proof_nonvacuous
+  module: PVsNP.NaturalProofs
+  axioms:
+  - propext
+  - Classical.choice
+  - Quot.sound
+- id: C6
+  title: Odd-Cycle XOR Minimal Unsatisfiability for All 2k+1 Variables (k >= 0)
+  challenge_stmt: Challenge.OddCycleContextualStmt
+  solution_proof: Solution.prove_odd_cycle_contextual
+  module: PVsNP.SheafPolymorphism
+  axioms:
+  - propext
+  - Quot.sound
+- id: C7
+  title: Mermin-Peres 9-Variable Parity System Minimal Unsatisfiability
+  challenge_stmt: Challenge.MerminPeresContextualStmt
+  solution_proof: Solution.prove_mermin_peres_contextual
+  module: PVsNP.SheafPolymorphism
+  axioms:
+  - propext
+  - Classical.choice
+  - Quot.sound
+- id: C8
+  title: Four Tractable Polymorphisms (XOR Maltsev, Horn AND, Dual-Horn OR, 2-SAT Majority)
+  challenge_stmt: Challenge.TractablePolymorphismsStmt
+  solution_proof: Solution.prove_tractable_polymorphisms
+  module: PVsNP.SheafPolymorphism
+  axioms:
+  - propext
+- id: C9
+  title: All-Arity Monotone 3-SAT Polymorphism Rigidity & Minimality of {R000, R111} (Post's Lattice)
+  challenge_stmt: Challenge.Monotone3SATRigidStmt
+  solution_proof: Solution.prove_monotone_3sat_rigid
+  module: PVsNP.SheafPolymorphism
+  axioms:
+  - propext
+  - Quot.sound
+- id: C10
+  title: Markov Bounded-Negation Tight Threshold (<= r NOT cannot invert >= 2^r; k NOT inverts 2^k - 1)
+  challenge_stmt: Challenge.MarkovInverterTightStmt
+  solution_proof: Solution.prove_markov_inverter_tight
+  module: PVsNP.CircuitPhaseTransition
+  axioms:
+  - propext
+  - Classical.choice
+  - Quot.sound
+- id: C11
+  title: k-NOT Circuit Compilation (Existence; No Size Bound)
+  challenge_stmt: Challenge.FischerReductionStmt
+  solution_proof: Solution.prove_fischer_reduction
+  module: PVsNP.CircuitPhaseTransition
+  axioms:
+  - propext
+  - Classical.choice
+  - Quot.sound
+- id: C12
+  title: Multiplicative Complexity Degree Lower Bound (deg_F2(f) <= k + 1) & MC(AND_n) >= n - 1
+  challenge_stmt: Challenge.MultiplicativeComplexityStmt
+  solution_proof: Solution.prove_multiplicative_complexity
+  module: PVsNP.CircuitPhaseTransition
+  axioms:
+  - propext
+  - Classical.choice
+  - Quot.sound
+- id: C13
+  title: Characteristic-2 Permanent=Determinant Collapse & Universal p >= 3 Separation Witness W_n
+  challenge_stmt: Challenge.PermDetChar2Stmt
+  solution_proof: Solution.prove_perm_det_char2
+  module: PVsNP.CircuitPhaseTransition
+  axioms:
+  - propext
+  - Classical.choice
+  - Quot.sound
+- id: C14
+  title: Reversible Straight-Line Program Reversibility & Exact d-Fold Constant Product (3*4^{d-1} - 2
+    Ops)
+  challenge_stmt: Challenge.CatalyticAlgebraStmt
+  solution_proof: Solution.prove_catalytic_algebra
+  module: PVsNP.CatalyticAlgebra
+  axioms:
+  - propext
+  - Quot.sound
+- id: ALL
+  title: Conjunction of All 14 Formalized Statements
+  challenge_stmt: Challenge.AllFrontierTheoremsStmt
+  solution_proof: Solution.prove_all_frontier_theorems
+  module: Solution
+  axioms:
+  - propext
+  - Classical.choice
+  - Quot.sound
